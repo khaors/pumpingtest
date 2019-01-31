@@ -1,5 +1,7 @@
 # __pumpingtest__: R Package for the analysis and evaluation of pumping tests
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rves)](https://cran.r-project.org/package=pumpingtest)
+[![Travis build status](https://travis-ci.org/khaors/pumpingtest.svg?branch=master)](https://travis-ci.org/khaors/pumpingtest)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/khaors/pumpingtest?branch=master&svg=true)](https://ci.appveyor.com/project/khaors/pumpingtest)
 
 The pumpingtest package provides functions to analyze and evaluate aquifer test including pumping tests with constant and variable rate, recovery tests, slug tests, and constant head tests (variable discharge).
 
