@@ -1,0 +1,17 @@
+Package: pumpingtest
+Type: Package
+Title: R Package for the analysis and evaluation of pumping tests
+Version: 0.1.0
+Authors@R: person("Oscar", "Garcia-Cabrejo", role = c("aut", "cre"), email = "khaors@gmail.com")
+Maintainer: Oscar Garcia-Cabrejo <khaors@gmail.com>
+Description: This package includes functions for the analysis and evaluation of aquifer tests (pumping tests, slug tests and constant head tests) in different types of aquifers (confined, leaky, unconfined and fractured). The estimation of the hydraulic parameters (Transmisvity and Storage coefficient) is obtained using a combination of nonlinear least-squares, optimization and bayesian methods and the numerical inversion of the Laplace transform via Stehfest algorithm.
+Depends:
+    R(>= 3.0.0)
+License: GPL
+Imports: Rcpp (>= 1.0.0), dplyr, ggplot2, stringi, stringr, KernSmooth, locpol, lokern, lpridge, pracma, Matrix, matrixcalc, stats, mvtnorm, DEoptim, GA, GenSA, copulaedas, gridExtra, methods,minpack.lm, pso, shiny, rhandsontable, shinyalert
+LinkingTo: Rcpp
+RoxygenNote: 6.1.1
+Suggests: testthat
+BugReports: https://github.com/khaors/pumpingtest/issues
+URL: https://github.com/khaors/pumpingtest
+Encoding: UTF-8

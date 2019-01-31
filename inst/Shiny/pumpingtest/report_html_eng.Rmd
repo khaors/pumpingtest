@@ -1,0 +1,57 @@
+---
+title: "Pumping Test Analysis Results"
+output: 
+    html_document:
+         number_sections: true
+params:
+  current.ptest: NA
+---
+
+```{r load_lib,echo=FALSE}
+# The `params` object is available in the document.
+library(pumpingtest)
+library(knitr)
+library(kableExtra)
+```
+
+# Basic information about the Pumping Test
+
+The pumping test  `r params$current.ptest$id[[1]]` dataset contains `r length(params$current.ptest$t)` measurements and a short summary of their statistical properties is included in the following table:
+```{r data_summary,echo=FALSE}
+t <- params$current.ptest$t
+s <- params$current.ptest$s
+ptest.df <- data.frame("Time" = t, "Drawdown" = s)
+summary(ptest.df)
+```
+
+
+# Diagnostic Plot
+
+```{r plot_diagnostic, echo=FALSE, fig.width=6,fig.height=5,fig.align='center'}
+plot(params$current.ptest, type = "diagnostic", dmethod = "smoothspline")
+```
+
+# Aquifer Parameter Estimation
+
+```{r plot_estimation, echo=FALSE, fig.width=6,fig.height=5,fig.align='center'}
+print(params$current.ptest$estimated)
+print(params$current.ptest$hydraulic_parameters)
+plot(params$current.ptest, type = "estimation", dmethod = "smoothspline", 
+     results = FALSE)
+```
+
+
+# Model Diagnostic
+
+The quality of the estimated model can be checked using the following figure:
+
+```{r plot_model_diagnostic, echo=FALSE, fig.width=6,fig.height=5,fig.align='center'}
+plot(params$current.ptest, type = "model.diagnostic")
+```
+
+
+# Appendix{-}
+
+```{r data_table, echo=FALSE}
+kable(ptest.df, format = "html", digits = 3, align = c('c','c'), caption = "VES DATA") %>%   kable_styling(bootstrap_options = "striped", full_width = F)
+```
