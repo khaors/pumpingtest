@@ -22,7 +22,7 @@ library(pumpingtest)
 
 ## Package Documentation
 
-The package documentation can be accesed [here](https://khaors.github.io/pumpingtest/) 
+The package documentation can be accesed [here](https://khaors.github.io/pumpingtest/index.html) 
 
 ## Shiny App
 
