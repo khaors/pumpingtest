@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>evaluate — evaluate • pumpingtest</title>
+<title>plot_uncert — plot_uncert • pumpingtest</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="evaluate — evaluate" />
+<meta property="og:title" content="plot_uncert — plot_uncert" />
 
-<meta property="og:description" content="Function to calculate the drawdown in time or space from a set of parameters determined using
-the fit function." />
+<meta property="og:description" content="Function to plot the distributions of the confidence intervals estimated using bootstrapp
+from a model fitted using nonlinear regression." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,50 +100,36 @@ the fit function." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>evaluate</h1>
+    <h1>plot_uncert</h1>
     <small class="dont-index">Source: <a href='https://github.com/khaors/pumpingtest/blob/master/R/pumpingtest.R'><code>R/pumpingtest.R</code></a></small>
-    <div class="hidden name"><code>evaluate.Rd</code></div>
+    <div class="hidden name"><code>plot_uncert.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function to calculate the drawdown in time or space from a set of parameters determined using
-the <code>fit</code> function.</p>
+    <p>Function to plot the distributions of the confidence intervals estimated using bootstrapp
+from a model fitted using nonlinear regression.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>evaluate</span>(<span class='no'>ptest</span>, <span class='no'>model</span>, <span class='kw'>test.time</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_uncert</span>(<span class='no'>ptest</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ptest</th>
-      <td><p>A pumping_test object</p></td>
+      <td><p>A pumping_test object.</p></td>
     </tr>
     <tr>
-      <th>model</th>
-      <td><p>Character string specifying the model used to calculate the drawdown</p></td>
+      <th>cex</th>
+      <td><p>Character expansion</p></td>
     </tr>
     <tr>
-      <th>test.time</th>
-      <td><p>A logical flag indicating if the evaluation of the pumping test data needs to
-be calculated at the drawdown times</p></td>
-    </tr>
-    <tr>
-      <th>n</th>
-      <td><p>Number of points used to calculate the drawdown if test.time = FALSE</p></td>
+      <th>...</th>
+      <td><p>Additional parameters for the plot function</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list with the entries</p><ul>
-<li><p>t: Vector with the time</p></li>
-<li><p>s: Vector with the calculated drawdown</p></li>
-<li><p>dsdlnt: Vector with the derivative of drawdown with respect to the log of time</p></li>
-</ul>
-
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -152,7 +138,7 @@ be calculated at the drawdown times</p></td>
   <code><a href='confint_bootstrap.html'>confint_bootstrap</a></code>,
   <code><a href='confint_jackniffe.html'>confint_jackniffe</a></code>,
   <code><a href='confint_wald.html'>confint_wald</a></code>, <code>estimated&lt;-</code>,
-  <code><a href='fit.optimization.html'>fit.optimization</a></code>,
+  <code><a href='evaluate.html'>evaluate</a></code>, <code><a href='fit.optimization.html'>fit.optimization</a></code>,
   <code>fit.parameters&lt;-</code>,
   <code><a href='fit.sampling.html'>fit.sampling</a></code>, <code><a href='fit.html'>fit</a></code>,
   <code>hydraulic.parameter.names&lt;-</code>,
@@ -161,33 +147,19 @@ be calculated at the drawdown times</p></td>
   <code><a href='plot.pumping_test.html'>plot.pumping_test</a></code>,
   <code><a href='plot_model_diagnostic.html'>plot_model_diagnostic</a></code>,
   <code><a href='plot_sample_influence.html'>plot_sample_influence</a></code>,
-  <code><a href='plot_uncert.html'>plot_uncert</a></code>,
   <code><a href='print.pumping_test.html'>print.pumping_test</a></code>,
   <code><a href='pumping_test.html'>pumping_test</a></code>, <code><a href='simulate.html'>simulate</a></code>,
   <code><a href='summary.pumping_test.html'>summary.pumping_test</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>theis</span>)
-<span class='no'>ptest</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pumping_test.html'>pumping_test</a></span>(<span class='st'>"Well1"</span>, <span class='kw'>Q</span> <span class='kw'>=</span> <span class='fl'>1.3e-3</span>, <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='no'>theis</span>$<span class='no'>t</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='no'>theis</span>$<span class='no'>s</span>)
-<span class='no'>ptest.fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fit.html'>fit</a></span>(<span class='no'>ptest</span>, <span class='st'>"theis"</span>)
-<span class='fu'>hydraulic.parameters</span>(<span class='no'>ptest</span>) <span class='kw'>&lt;-</span> <span class='no'>ptest.fit</span>$<span class='no'>hydraulic_parameters</span>
-<span class='fu'>fit.parameters</span>(<span class='no'>ptest</span>) <span class='kw'>&lt;-</span> <span class='no'>ptest.fit</span>$<span class='no'>parameters</span>
-<span class='fu'>model</span>(<span class='no'>ptest</span>) <span class='kw'>&lt;-</span> <span class='st'>"theis"</span>
-<span class='fu'>estimated</span>(<span class='no'>ptest</span>) <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>evaluate</span>(<span class='no'>ptest</span>, <span class='st'>"theis"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     <p>Oscar Garcia-Cabrejo <a href='mailto:khaors@gmail.com'>khaors@gmail.com</a></p>

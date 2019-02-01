@@ -139,6 +139,8 @@
   <code>hydraulic.parameters&lt;-</code>,
   <code><a href='model.parameters.html'>model.parameters</a></code>, <code>model&lt;-</code>,
   <code><a href='plot.pumping_test.html'>plot.pumping_test</a></code>,
+  <code><a href='plot_sample_influence.html'>plot_sample_influence</a></code>,
+  <code><a href='plot_uncert.html'>plot_uncert</a></code>,
   <code><a href='print.pumping_test.html'>print.pumping_test</a></code>,
   <code><a href='pumping_test.html'>pumping_test</a></code>, <code><a href='simulate.html'>simulate</a></code>,
   <code><a href='summary.pumping_test.html'>summary.pumping_test</a></code></p></div>
@@ -152,7 +154,7 @@
 <span class='fu'>fit.parameters</span>(<span class='no'>ptest</span>) <span class='kw'>&lt;-</span> <span class='no'>ptest.fit</span>$<span class='no'>parameters</span>
 <span class='fu'>model</span>(<span class='no'>ptest</span>) <span class='kw'>&lt;-</span> <span class='st'>"theis"</span>
 <span class='fu'>estimated</span>(<span class='no'>ptest</span>) <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>ptest</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'estimation'</span>, <span class='kw'>dmethod</span> <span class='kw'>=</span> <span class='st'>"spline"</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>30</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("t", "s", "variable")</span></div><div class='img'><img src='plot_model_diagnostic-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_model_diagnostic</span>(<span class='no'>ptest</span>)</div><div class='output co'>#&gt; <span class='message'>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></div><div class='output co'>#&gt; <span class='message'>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></div><div class='output co'>#&gt; TableGrob (2 x 2) "arrange": 4 grobs
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>ptest</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'estimation'</span>, <span class='kw'>dmethod</span> <span class='kw'>=</span> <span class='st'>"spline"</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>30</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("t", "s", "variable")</span></div><div class='img'><img src='plot_model_diagnostic-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_model_diagnostic</span>(<span class='no'>ptest</span>)</div><div class='output co'>#&gt; <span class='message'>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></div><div class='output co'>#&gt; <span class='message'>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></div><div class='img'><img src='plot_model_diagnostic-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; TableGrob (2 x 2) "arrange": 4 grobs
 #&gt;   z     cells    name           grob
 #&gt; 1 1 (1-1,1-1) arrange gtable[layout]
 #&gt; 2 2 (1-1,2-2) arrange gtable[layout]
