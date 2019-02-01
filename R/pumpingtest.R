@@ -513,8 +513,11 @@ plot.pumping_test <- function(x, type = c('diagnostic','estimation',
     }
     p1 <- p1 + theme_bw()
   }#Estimation
-  else if(type[1] == 'model.diagnostic'){
+  else if(type == 'model.diagnostic'){
     p1 <- plot_model_diagnostic(ptest, cex = cex, ...)
+  }
+  else if(type == 'uncertainty'){
+    p1 <- plot_uncert(ptest)
   }
   #
   return(p1)
@@ -530,7 +533,7 @@ plot.pumping_test <- function(x, type = c('diagnostic','estimation',
 #' @family base functions
 #' @importFrom stats  sd
 #' @importFrom ggplot2 ggplot geom_point coord_equal ggtitle geom_smooth geom_qq
-#' @importFrom gridExtra arrangeGrob
+#' @importFrom gridExtra arrangeGrob grid.arrange
 #' @export
 #' @examples
 #' data(theis)
@@ -585,8 +588,136 @@ plot_model_diagnostic <- function(ptest, ...){
     ggtitle("d) QQ plot") +
     theme_bw()
   #
-  ptot <- arrangeGrob(p1, p2, p3, p4, ncol = 2)
+  #ptot <- arrangeGrob(p1, p2, p3, p4, ncol = 2)
+  ptot <- grid.arrange(p1, p2, p3, p4, ncol = 2)
   return(ptot)
+}
+#' @title
+#' plot_sample_influence
+#' @description
+#' Function to create a plot with an influence measure for each sample of the pumping test.
+#' This plot is helpful in the identification of the samples that are influential in the
+#' estimation of the hydraulic parameters.
+#' @param res A list with the results of the jackniffe CI estimation.
+#' @param ... Additional parameters to the plot function
+#' @return
+#' A plot with the influence measure of each sample
+#' @author
+#' Oscar Garcia-Cabrejo \email{khaors@gmail.com}
+#' @family base functions
+#' @importFrom grDevices colors
+#' @importFrom graphics plot abline lines points legend title text par mtext
+#' @export
+plot_sample_influence <- function(res, ...){
+  if(res$method != 'jackniffe'){
+    stop('ERROR the results of confint_jackniffe are required to create this plot.')
+  }
+  par.label.names <- list(Tr = 'Transmissivity(m2/s)',
+                          Ss = 'Storage Coefficient',
+                          radius_influence = 'Radius Influence(m)',
+                          r = 'Distance to well(m)',
+                          Q = 'Discharge(m3/s)',
+                          omegad = 'Drainage Porosity',
+                          cd = 'Wellbore storage',
+                          rho = 'Dimensionless radius',
+                          Ka = 'K aquitard (m/s)',
+                          B = 'Aquitard Thickness(m)',
+                          rw = 'Well radius(m)',
+                          rc = 'Casing radius(m)',
+                          rd = 'Dimensionless radius',
+                          Sxf2 = 'Sxf2',
+                          n = 'n (Flow Dimension)')
+  label <- c('a', 'b', 'c', 'd', 'e', 'f')
+  dfbeta <- res$dfbeta
+  npar <- ncol(dfbeta)
+  ndat <- nrow(dfbeta)
+  nrowp <- ceiling(npar/2)
+  hydr.par.names <- colnames(dfbeta)
+  #
+  par0 <- par(no.readonly = TRUE)
+  par(mfrow=c(nrowp, 2))
+  pos <- seq(1, nrow(dfbeta), by = 1)
+  for(ipar in 1:npar){
+    mx <- max(max(dfbeta[,ipar]), 2.5)
+    plot(dfbeta[,ipar], type = "p", xlab = "Sample", ylab = "DFBETA",
+         main = paste0(label[ipar],') ', par.label.names[[hydr.par.names[ipar]]]),
+         ylim = c(0, mx), ...)
+    lines(c(1,nrow(dfbeta)),c(2.,2.), lty = 3, col = "red", ...)
+    pos_influential <- dfbeta[,ipar] > 2
+    if(sum(pos_influential) > 0){
+      points(pos[pos_influential], dfbeta[pos_influential,ipar], col = "red",
+             pch = 7, ...)
+    }
+    for(i in 1:ndat){
+      lines(c(i,i),c(0,dfbeta[i,ipar]), col = "black")
+    }
+  }
+  par(par0)
+}
+#' @title
+#' plot_uncert
+#' @description
+#' Function to plot the distributions of the confidence intervals estimated using bootstrapp
+#' from a model fitted using nonlinear regression.
+#' @param ptest A pumping_test object.
+#' @param cex Character expansion
+#' @param ... Additional parameters for the plot function
+#' @importFrom GGally ggpairs
+#' @importFrom ggplot2 theme_bw
+#' @author
+#' Oscar Garcia-Cabrejo \email{khaors@gmail.com}
+#' @family base functions
+#' @export
+plot_uncert <- function(ptest, cex =1, ...){
+  if(class(ptest) != 'pumping_test'){
+    stop('A pumping_test object is required as input')
+  }
+  #
+  if(!ptest$estimated){
+    stop('An estimated pumping_test object is required')
+  }
+  #
+  if(class(ptest$hydraulic_parameters) != 'matrix'){
+    stop('The values of the hydraulic parameters must be stored in a matrix')
+  }
+  #
+  if(nrow(ptest$hydraulic_parameters) < 30){
+    stop('There are not enough values of the hydraulic parameters')
+  }
+  #
+  if(is.null(ptest$hydraulic_parameters_names)){
+    stop('ERROR the names of the hydraulic parameters have not been assigned')
+  }
+  #
+  par.label.names <- list(Tr = 'Transmissivity(m2/s)',
+                          Ss = 'Storage Coefficient',
+                          radius_influence = 'Radius Influence(m)',
+                          r = 'Distance to well(m)',
+                          Q = 'Discharge(m3/s)',
+                          omegad = 'Drainage Porosity',
+                          cd = 'Wellbore storage',
+                          rho = 'Dimensionless radius',
+                          Ka = 'K aquitard (m/s)',
+                          B = 'Aquitard Thickness(m)',
+                          rw = 'Well radius(m)',
+                          rc = 'Casing radius(m)',
+                          rd = 'Dimensionless radius',
+                          Sxf2 = 'Sxf2',
+                          n = 'n (Flow Dimension)')
+  #
+  hydr.parameters.names <- ptest$hydraulic_parameters_names
+  hydr.parameters.names1 <- vector('character', length(hydr.parameters.names))
+  for(ipar in 1:length(hydr.parameters.names)){
+    current_par <- hydr.parameters.names[[ipar]]
+    hydr.parameters.names1[ipar] <- par.label.names[[current_par]]
+  }
+  #
+  hydraulic_parameters.df <- as.data.frame(ptest$hydraulic_parameters)
+  names(hydraulic_parameters.df) <- hydr.parameters.names1
+  p1 <- ggpairs(hydraulic_parameters.df,
+                columnLabels = hydr.parameters.names1) +
+    theme_bw()
+  return(p1)
 }
 #' @title
 #' fit

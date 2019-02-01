@@ -38,6 +38,8 @@ Other base functions: \code{\link{additional.parameters<-}},
   \code{\link{hydraulic.parameters<-}},
   \code{\link{model.parameters}}, \code{\link{model<-}},
   \code{\link{plot.pumping_test}},
+  \code{\link{plot_sample_influence}},
+  \code{\link{plot_uncert}},
   \code{\link{print.pumping_test}},
   \code{\link{pumping_test}}, \code{\link{simulate}},
   \code{\link{summary.pumping_test}}

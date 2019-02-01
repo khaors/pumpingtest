@@ -8,7 +8,7 @@ Description: This package includes functions for the analysis and evaluation of 
 Depends:
     R(>= 3.0.0)
 License: GPL
-Imports: Rcpp (>= 1.0.0), dplyr, ggplot2, stringi, stringr, KernSmooth, locpol, lokern, lpridge, pracma, Matrix, matrixcalc, stats, mvtnorm, DEoptim, GA, GenSA, copulaedas, gridExtra, methods,minpack.lm, pso, shiny, rhandsontable, shinyalert
+Imports: Rcpp (>= 1.0.0), dplyr, ggplot2, stringi, stringr, KernSmooth, locpol, lokern, lpridge, pracma, Matrix, matrixcalc, stats, mvtnorm, DEoptim, GA, GenSA, copulaedas, gridExtra, methods,minpack.lm, pso, shiny, rhandsontable, shinyalert, grid
 LinkingTo: Rcpp
 RoxygenNote: 6.1.1
 Suggests: testthat
