@@ -53,6 +53,10 @@ callViaXPtr <- function(x, arg1, arg2, arg3, xpsexp) {
     .Call('_pumpingtest_callViaXPtr', PACKAGE = 'pumpingtest', x, arg1, arg2, arg3, xpsexp)
 }
 
+stehfest_inversion_vector_cpp <- function(t, coeffs, funname, arg1, arg2, arg3) {
+    .Call('_pumpingtest_stehfest_inversion_vector_cpp', PACKAGE = 'pumpingtest', t, coeffs, funname, arg1, arg2, arg3)
+}
+
 stehfest_inversion_cpp <- function(t, coeffs, funname, arg1, arg2, arg3) {
     .Call('_pumpingtest_stehfest_inversion_cpp', PACKAGE = 'pumpingtest', t, coeffs, funname, arg1, arg2, arg3)
 }
@@ -69,8 +73,16 @@ boulton_well_function_cpp <- function(td, par1, par2, par3 = 0.0) {
     .Call('_pumpingtest_boulton_well_function_cpp', PACKAGE = 'pumpingtest', td, par1, par2, par3)
 }
 
+boulton_well_function_vector_cpp <- function(td, par1, par2, par3) {
+    .Call('_pumpingtest_boulton_well_function_vector_cpp', PACKAGE = 'pumpingtest', td, par1, par2, par3)
+}
+
 hantush_jacob_well_function_cpp <- function(td, par1, par2, par3) {
     .Call('_pumpingtest_hantush_jacob_well_function_cpp', PACKAGE = 'pumpingtest', td, par1, par2, par3)
+}
+
+hantush_jacob_well_function_vector_cpp <- function(td, par1, par2, par3) {
+    .Call('_pumpingtest_hantush_jacob_well_function_vector_cpp', PACKAGE = 'pumpingtest', td, par1, par2, par3)
 }
 
 general_radial_flow_well_function_cpp <- function(td, par1, par2, par3) {
@@ -79,6 +91,10 @@ general_radial_flow_well_function_cpp <- function(td, par1, par2, par3) {
 
 papadopulos_cooper_well_function_cpp <- function(td, par1, par2, par3) {
     .Call('_pumpingtest_papadopulos_cooper_well_function_cpp', PACKAGE = 'pumpingtest', td, par1, par2, par3)
+}
+
+papadopulos_cooper_well_function_vector_cpp <- function(td, par1, par2, par3) {
+    .Call('_pumpingtest_papadopulos_cooper_well_function_vector_cpp', PACKAGE = 'pumpingtest', td, par1, par2, par3)
 }
 
 cooper_well_function_cpp <- function(td, par1, par2, par3) {
@@ -97,7 +113,35 @@ warren_root_well_function_cpp <- function(td, par1, par2, par3) {
     .Call('_pumpingtest_warren_root_well_function_cpp', PACKAGE = 'pumpingtest', td, par1, par2, par3)
 }
 
-theis_solution_space <- function(Q, t, hydrpar, r) {
-    .Call('_pumpingtest_theis_solution_space', PACKAGE = 'pumpingtest', Q, t, hydrpar, r)
+calculate_aquifer_coordinates <- function(nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_calculate_aquifer_coordinates', PACKAGE = 'pumpingtest', nx, ny, xmin, xmax, ymin, ymax)
+}
+
+calculate_distance_well <- function(x0, y0, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_calculate_distance_well', PACKAGE = 'pumpingtest', x0, y0, nx, ny, xmin, xmax, ymin, ymax)
+}
+
+theis_solution_space <- function(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_theis_solution_space', PACKAGE = 'pumpingtest', Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
+}
+
+boulton_solution_space <- function(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_boulton_solution_space', PACKAGE = 'pumpingtest', Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
+}
+
+papadopulos_solution_space <- function(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_papadopulos_solution_space', PACKAGE = 'pumpingtest', Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
+}
+
+hantush_jacob_solution_space <- function(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_hantush_jacob_solution_space', PACKAGE = 'pumpingtest', Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
+}
+
+space_calculation_via_string <- function(model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_space_calculation_via_string', PACKAGE = 'pumpingtest', model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
+}
+
+infinite_aquifer_calculate_drawdown_cpp <- function(model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_infinite_aquifer_calculate_drawdown_cpp', PACKAGE = 'pumpingtest', model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
 }
 

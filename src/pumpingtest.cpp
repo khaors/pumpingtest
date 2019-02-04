@@ -1,16 +1,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-
-// This is a simple example of exporting a C++ function to R. You can
-// source this function into an R session using the Rcpp::sourceCpp 
-// function (or via the Source button on the editor toolbar). Learn
-// more about Rcpp at:
 //
-//   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
-//
-
 // [[Rcpp::export]]
 double factorial_cpp(const int& n){
   double fac=1.0;
@@ -305,21 +295,21 @@ XPtr<funcPtr> putFunPtrInXPtr(std::string fstr) {
   else if(fstr == "papadopulos_cooper")
     return(XPtr<funcPtr>(new funcPtr(&papadopulos_cooper_WF_LT_cpp)));
   else if(fstr == "general_radial_flow" || fstr == "grf")
-    return(XPtr<funcPtr>(new funcPtr(general_radial_flow_WF_LT_cpp)));
+    return(XPtr<funcPtr>(new funcPtr(&general_radial_flow_WF_LT_cpp)));
   else if(fstr == "agarwal_skin")
-    return(XPtr<funcPtr>(new funcPtr(agarwal_skin_WF_LT_cpp)));
+    return(XPtr<funcPtr>(new funcPtr(&agarwal_skin_WF_LT_cpp)));
   else if(fstr == "agarwal_recovery")
-    return(XPtr<funcPtr>(new funcPtr(agarwal_recovery_WF_LT_cpp)));
+    return(XPtr<funcPtr>(new funcPtr(&agarwal_recovery_WF_LT_cpp)));
   else if(fstr == "cooper")
-    return(XPtr<funcPtr>(new funcPtr(cooper_WF_LT_cpp)));
+    return(XPtr<funcPtr>(new funcPtr(&cooper_WF_LT_cpp)));
   else if(fstr == "neuzil")
-    return(XPtr<funcPtr>(new funcPtr(neuzil_WF_LT_cpp)));
+    return(XPtr<funcPtr>(new funcPtr(&neuzil_WF_LT_cpp)));
   else if(fstr == "warren_root")
-    return(XPtr<funcPtr>(new funcPtr(warren_root_WF_LT_cpp)));
+    return(XPtr<funcPtr>(new funcPtr(&warren_root_WF_LT_cpp)));
   else
     return XPtr<funcPtr>(R_NilValue); // runtime error as NULL no XPtr
 }
-
+//
 // [[Rcpp::export]]
 NumericVector callViaString(NumericVector x, 
                             const double& arg1, 
@@ -361,6 +351,42 @@ NumericVector callViaXPtr(NumericVector x,
 //   print(sum(r0-r1))
 //   */
 
+// [[Rcpp::export]]
+NumericVector stehfest_inversion_vector_cpp(NumericVector t, 
+                                            NumericVector coeffs, 
+                                            std::string funname, 
+                                            NumericVector arg1, 
+                                            NumericVector arg2, 
+                                            NumericVector arg3){
+  int n=t.length();
+  int nc = coeffs.length();
+  NumericVector ft(n);
+  NumericVector y(1),p1(1);
+  double a, arg1v,arg2v,arg3v;
+  arg1v=arg1[0];
+  arg2v=arg2[0];
+  arg3v=arg3[0];
+  for(int it = 1;it<=n;it++){
+    ft[it-1] = 0.0;
+    a = log(2.0)/t[it-1];
+    if(arg1.length() > 1){
+      arg1v=arg1[it];
+    }
+    if(arg2.length() > 1){
+      arg2v=arg2[it];
+    }
+    if(arg3.length() > 1){
+      arg3v=arg3[it];
+    }
+    for(int ic = 1; ic <= nc; ic++){
+      p1(0) = ic*a;
+      y = callViaString(p1, arg1v, arg2v, arg3v, funname); 
+      ft[it-1] = ft[it-1] + coeffs[ic-1]*y[0]; 
+    }
+    ft[it-1] = a*ft[it-1];
+  }
+  return(ft);
+}
 
 // [[Rcpp::export]]
 NumericVector stehfest_inversion_cpp(NumericVector t, 
@@ -374,8 +400,6 @@ NumericVector stehfest_inversion_cpp(NumericVector t,
   NumericVector ft(n);
   NumericVector y(1),p1(1);
   double a;//,p;
-  //XPtr<funcPtr> xpfun = putFunPtrInXPtr(funname);
-  //funcPtr fun = *xpfun;
   for(int it = 1;it<=n;it++){
     ft[it-1] = 0.0;
     a = log(2.0)/t[it-1];
@@ -453,7 +477,18 @@ NumericVector boulton_well_function_cpp(NumericVector td,
   W = stehfest_inversion_cpp(td, coeffs, "boulton", par1, par2, par3);
   return(W);
 }
-
+//
+// [[Rcpp::export]]
+NumericVector boulton_well_function_vector_cpp(NumericVector td, 
+                                               NumericVector par1, 
+                                               NumericVector par2, 
+                                               NumericVector par3){
+  int n=td.size();
+  NumericVector W(n);
+  NumericVector coeffs = stehfest_coefficients_cpp(8);
+  W = stehfest_inversion_vector_cpp(td, coeffs, "boulton", par1, par2, par3);
+  return(W);
+}
 // [[Rcpp::export]]
 NumericVector hantush_jacob_well_function_cpp(NumericVector td, 
                                               const double& par1, 
@@ -465,7 +500,19 @@ NumericVector hantush_jacob_well_function_cpp(NumericVector td,
   W = stehfest_inversion_cpp(td, coeffs, "hantush_jacob", par1, par2, par3);
   return(W);
 }
-
+//
+// [[Rcpp::export]]
+NumericVector hantush_jacob_well_function_vector_cpp(NumericVector td, 
+                                                     NumericVector par1, 
+                                                     NumericVector par2, 
+                                                     NumericVector par3){
+  int n=td.size();
+  NumericVector W(n);
+  NumericVector coeffs = stehfest_coefficients_cpp(8);
+  W = stehfest_inversion_vector_cpp(td, coeffs, "hantush_jacob", par1, 
+                                    par2, par3);
+  return(W);
+}
 //[[Rcpp::export]]
 NumericVector general_radial_flow_well_function_cpp(NumericVector td,
                                                     const double& par1, 
@@ -485,9 +532,24 @@ NumericVector papadopulos_cooper_well_function_cpp(NumericVector td,
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
-  W = stehfest_inversion_cpp(td, coeffs, "papadopulos_cooper", par1, par2, par3);
+  W = stehfest_inversion_cpp(td, coeffs, "papadopulos_cooper", par1, par2, 
+                             par3);
   return(W);
 }
+//
+// [[Rcpp::export]]
+NumericVector papadopulos_cooper_well_function_vector_cpp(NumericVector td, 
+                                                   NumericVector par1, 
+                                                   NumericVector par2, 
+                                                   NumericVector par3){
+  int n = td.size();
+  NumericVector W(n);
+  NumericVector coeffs = stehfest_coefficients_cpp(8);
+  W = stehfest_inversion_vector_cpp(td, coeffs, "papadopulos_cooper", par1, 
+                                    par2, par3);
+  return(W);
+}
+//
 // [[Rcpp::export]]
 NumericVector cooper_well_function_cpp(NumericVector td, 
                                        const double& par1, 
@@ -596,30 +658,237 @@ NumericVector warren_root_well_function_cpp(NumericVector td,
 //   print(res)
 //   */
 
-// // [[Rcpp::export]]
-// NumericVector theis_solution_initial_cpp(const double& Q, 
-//                                   const double& r, 
-//                                   NumericVector t, 
-//                                   NumericVector s){
-//   int n = t.length();
-//   
-// }
-
+//
 // [[Rcpp::export]]
-NumericMatrix theis_solution_space(const double& Q, const double&t,
+NumericMatrix calculate_aquifer_coordinates(const int& nx, 
+                                            const int& ny, 
+                                            const double& xmin, 
+                                            const double& xmax, 
+                                            const double& ymin, 
+                                            const double& ymax){
+  NumericMatrix coords(nx*ny, 2);
+  double dx,dy,xcoord,ycoord;
+  dx = (xmax-xmin)/(nx);
+  dy = (ymax-ymin)/(ny);
+  int pos = 0;
+  for(int i=0;i<nx;i++){
+    for(int j=0;j<ny;j++){
+      xcoord = xmin + float(i)*dx;
+      ycoord = ymin + float(j)*dy;
+      coords(pos,0) = xcoord;
+      coords(pos,1) = ycoord;
+      pos++;
+    }
+  }
+  return(coords);
+}
+// [[Rcpp::export]]
+NumericVector calculate_distance_well(const double& x0, const double& y0, 
+                                      const int& nx, const int& ny, 
+                                      const double& xmin, 
+                                      const double& xmax, 
+                                      const double& ymin, 
+                                      const double& ymax){
+  NumericVector dist(nx*ny);
+  int pos = 0;
+  double dx,dy;
+  dx = (xmax-xmin)/(nx);
+  dy = (ymax-ymin)/(ny);
+  double xcoord,ycoord,dinx,diny;
+  for(int i=0;i<nx;i++){
+    for(int j=0;j<ny;j++){
+      xcoord = xmin + float(i)*dx;
+      ycoord = ymin + float(j)*dy;
+      //Rcout << xcoord << ',' << ycoord << std::endl;
+      dinx = std::pow((xcoord-x0), 2.0);
+      diny = std::pow((ycoord-y0), 2.0);
+      dist[pos]= std::sqrt(dinx + diny);
+      pos++;
+    }
+  }
+  return(dist);
+}
+// [[Rcpp::export]]
+NumericVector theis_solution_space(const double& Q, const double& x0, 
+                                   const double& y0, const double&t,
                                    NumericVector hydrpar,
-                                   NumericMatrix r){
-  int nrow = r.rows();
-  int ncol = r.cols();
-  NumericMatrix drawdown(nrow, ncol);
-  NumericMatrix u(nrow, ncol);
-  double currentr, Tr, Ss;
+                                   const int& nx, const int& ny, 
+                                   const double& xmin, 
+                                   const double& xmax, 
+                                   const double& ymin, 
+                                   const double& ymax){
+  NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
+  dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
+  double Tr, Ss;
   Tr = hydrpar[0];
   Ss = hydrpar[1];
-  for(int i=0;i<nrow;i++){
-    for(int j=0;j<ncol;j++){
-      u=(Ss*r)/(4.0*Tr*t);
+  u = (Ss*dist*dist)/(4.0*Tr*t);
+  td = 1.0/u;
+  drawdown=(Q/(4.0*M_PI*Tr))*theis_well_function_cpp(td, 0.0, 0.0, 0.0);
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector boulton_solution_space(const double& Q, const double& x0, 
+                                     const double& y0, const double&t,
+                                     NumericVector hydrpar,
+                                     const int& nx, const int& ny, 
+                                     const double& xmin, 
+                                     const double& xmax, 
+                                     const double& ymin, 
+                                     const double& ymax){
+  NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
+  dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
+  double Tr, Ss, Sy, alpha1;
+  NumericVector W(nx*ny), phi(nx*ny), sigma(1), par3(1);
+  Tr = hydrpar[0];
+  Ss = hydrpar[1];
+  Sy = hydrpar[2];
+  alpha1 = hydrpar[3];
+  sigma(1) = Ss/Sy;
+  phi = (alpha1*dist*dist*Ss)/(Tr);
+  u = (Ss*dist)/(4.0*Tr*t);
+  td = 1.0/u;
+  par3(1)=0.0;
+  W = boulton_well_function_vector_cpp(td, phi, sigma, par3);
+  drawdown = (Q/(4.0*M_PI*Tr))*W;
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector papadopulos_solution_space(const double& Q, const double& x0, 
+                                         const double& y0, const double&t,
+                                         NumericVector hydrpar,
+                                         const int& nx, const int& ny, 
+                                         const double& xmin, 
+                                         const double& xmax, 
+                                         const double& ymin, 
+                                         const double& ymax){
+  NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
+  dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
+  double Tr, Ss, rw, rc;
+  NumericVector W(nx*ny),rho(nx*ny),cd(1);
+  Tr = hydrpar[0];
+  Ss = hydrpar[1];
+  rw = hydrpar[2];
+  rc = hydrpar[3];
+  u = (Ss*dist)/(4.0*Tr*t);
+  cd(1) = std::pow(rw, 2)*Ss/std::pow(rc, 2);
+  rho = dist/rw;
+  td = 1.0/u;
+  W = papadopulos_cooper_well_function_vector_cpp(td, cd, rho, 0.0);
+  drawdown=(Q/(4.0*M_PI*Tr))*W;
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector hantush_jacob_solution_space(const double& Q, const double& x0, 
+                                         const double& y0, const double&t,
+                                         NumericVector hydrpar,
+                                         const int& nx, const int& ny, 
+                                         const double& xmin, 
+                                         const double& xmax, 
+                                         const double& ymin, 
+                                         const double& ymax){
+  NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
+  dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
+  double Tr, Ss, rw, rc;
+  NumericVector W(nx*ny),rho(nx*ny),cd(1);
+  Tr = hydrpar[0];
+  Ss = hydrpar[1];
+  rw = hydrpar[2];
+  rc = hydrpar[3];
+  u = (Ss*dist)/(4.0*Tr*t);
+  cd(1) = std::pow(rw, 2)*Ss/std::pow(rc, 2);
+  rho = dist/rw;
+  td = 1.0/u;
+  W=hantush_jacob_well_function_vector_cpp(td, cd, rho, 0.0);
+  drawdown=(Q/(4.0*M_PI*Tr))*W;
+  return(drawdown);
+}
+//
+//
+typedef NumericVector (*spacefuncPtr)(const double& Q,
+                       const double& x0, 
+                       const double& y0,
+                       const double& t,
+                       NumericVector hydrpar, 
+                       const int &nx, 
+                       const int& ny, 
+                       const double& xmin, 
+                       const double& xmax, 
+                       const double& ymin,
+                       const double& ymax);
+//
+XPtr<spacefuncPtr> putSpaceFunPtrInXPtr(std::string fstr) {
+  if (fstr == "theis")
+    return(XPtr<spacefuncPtr>(new spacefuncPtr(&theis_solution_space)));
+  if (fstr == "boulton")
+    return(XPtr<spacefuncPtr>(new spacefuncPtr(&boulton_solution_space)));
+  else
+    return XPtr<spacefuncPtr>(R_NilValue); // runtime error as NULL no XPtr
+}
+//
+// [[Rcpp::export]]
+NumericVector space_calculation_via_string(std::string model, 
+                                           const double& Q,
+                                           const double& x0, 
+                                           const double& y0,
+                                           const double& t,
+                                           NumericVector hydrpar, 
+                                           const int &nx, 
+                                           const int& ny, 
+                                           const double& xmin, 
+                                           const double& xmax, 
+                                           const double& ymin,
+                                           const double& ymax){
+  XPtr<spacefuncPtr> xpfun = putSpaceFunPtrInXPtr(model);
+  spacefuncPtr fun = *xpfun;
+  NumericVector y = fun(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax);
+  return (y);
+}
+//
+// [[Rcpp::export]]
+NumericMatrix infinite_aquifer_calculate_drawdown_cpp(std::string model, 
+                                                      NumericVector Q, 
+                                                      NumericVector x0, 
+                                                      NumericVector y0, 
+                                                      NumericVector t,
+                                                      NumericVector hydrpar,
+                                                      const int& nx, 
+                                                      const int& ny, 
+                                                      const double& xmin, 
+                                                      const double& xmax, 
+                                                      const double& ymin, 
+                                                      const double& ymax){
+  
+  int ntimes = t.length();
+  int nwells = Q.length();
+  NumericMatrix drawdown(nx*ny,ntimes);
+  double current_x0,current_y0,currentQ,current_time;
+  //
+  NumericVector current_drawdown(nx*ny),current_drawdown1(nx*ny);
+  for(int itime = 0; itime < ntimes; itime++){
+    current_time = t[itime];
+    current_drawdown1.fill(0.0);
+    for(int iwell = 0;iwell<nwells;iwell++){
+      currentQ = Q[iwell];
+      current_x0 = x0[iwell];
+      current_y0 = y0[iwell];
+      current_drawdown = space_calculation_via_string(model,currentQ, 
+                                                      current_x0, 
+                                                      current_y0,
+                                                      current_time,
+                                                      hydrpar, 
+                                                      nx, 
+                                                      ny, 
+                                                      xmin, 
+                                                      xmax, 
+                                                      ymin,
+                                                      ymax);
+      current_drawdown1=current_drawdown1+current_drawdown;
     }
+    drawdown(_,itime)=current_drawdown1;
   }
   return(drawdown);
 }

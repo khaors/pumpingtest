@@ -183,6 +183,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// stehfest_inversion_vector_cpp
+NumericVector stehfest_inversion_vector_cpp(NumericVector t, NumericVector coeffs, std::string funname, NumericVector arg1, NumericVector arg2, NumericVector arg3);
+RcppExport SEXP _pumpingtest_stehfest_inversion_vector_cpp(SEXP tSEXP, SEXP coeffsSEXP, SEXP funnameSEXP, SEXP arg1SEXP, SEXP arg2SEXP, SEXP arg3SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type coeffs(coeffsSEXP);
+    Rcpp::traits::input_parameter< std::string >::type funname(funnameSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type arg1(arg1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type arg2(arg2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type arg3(arg3SEXP);
+    rcpp_result_gen = Rcpp::wrap(stehfest_inversion_vector_cpp(t, coeffs, funname, arg1, arg2, arg3));
+    return rcpp_result_gen;
+END_RCPP
+}
 // stehfest_inversion_cpp
 NumericVector stehfest_inversion_cpp(NumericVector t, NumericVector coeffs, std::string funname, const double& arg1, const double& arg2, const double& arg3);
 RcppExport SEXP _pumpingtest_stehfest_inversion_cpp(SEXP tSEXP, SEXP coeffsSEXP, SEXP funnameSEXP, SEXP arg1SEXP, SEXP arg2SEXP, SEXP arg3SEXP) {
@@ -238,6 +254,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// boulton_well_function_vector_cpp
+NumericVector boulton_well_function_vector_cpp(NumericVector td, NumericVector par1, NumericVector par2, NumericVector par3);
+RcppExport SEXP _pumpingtest_boulton_well_function_vector_cpp(SEXP tdSEXP, SEXP par1SEXP, SEXP par2SEXP, SEXP par3SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type td(tdSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par1(par1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par2(par2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par3(par3SEXP);
+    rcpp_result_gen = Rcpp::wrap(boulton_well_function_vector_cpp(td, par1, par2, par3));
+    return rcpp_result_gen;
+END_RCPP
+}
 // hantush_jacob_well_function_cpp
 NumericVector hantush_jacob_well_function_cpp(NumericVector td, const double& par1, const double& par2, const double& par3);
 RcppExport SEXP _pumpingtest_hantush_jacob_well_function_cpp(SEXP tdSEXP, SEXP par1SEXP, SEXP par2SEXP, SEXP par3SEXP) {
@@ -249,6 +279,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double& >::type par2(par2SEXP);
     Rcpp::traits::input_parameter< const double& >::type par3(par3SEXP);
     rcpp_result_gen = Rcpp::wrap(hantush_jacob_well_function_cpp(td, par1, par2, par3));
+    return rcpp_result_gen;
+END_RCPP
+}
+// hantush_jacob_well_function_vector_cpp
+NumericVector hantush_jacob_well_function_vector_cpp(NumericVector td, NumericVector par1, NumericVector par2, NumericVector par3);
+RcppExport SEXP _pumpingtest_hantush_jacob_well_function_vector_cpp(SEXP tdSEXP, SEXP par1SEXP, SEXP par2SEXP, SEXP par3SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type td(tdSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par1(par1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par2(par2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par3(par3SEXP);
+    rcpp_result_gen = Rcpp::wrap(hantush_jacob_well_function_vector_cpp(td, par1, par2, par3));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -277,6 +321,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double& >::type par2(par2SEXP);
     Rcpp::traits::input_parameter< const double& >::type par3(par3SEXP);
     rcpp_result_gen = Rcpp::wrap(papadopulos_cooper_well_function_cpp(td, par1, par2, par3));
+    return rcpp_result_gen;
+END_RCPP
+}
+// papadopulos_cooper_well_function_vector_cpp
+NumericVector papadopulos_cooper_well_function_vector_cpp(NumericVector td, NumericVector par1, NumericVector par2, NumericVector par3);
+RcppExport SEXP _pumpingtest_papadopulos_cooper_well_function_vector_cpp(SEXP tdSEXP, SEXP par1SEXP, SEXP par2SEXP, SEXP par3SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type td(tdSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par1(par1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par2(par2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type par3(par3SEXP);
+    rcpp_result_gen = Rcpp::wrap(papadopulos_cooper_well_function_vector_cpp(td, par1, par2, par3));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -336,17 +394,165 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calculate_aquifer_coordinates
+NumericMatrix calculate_aquifer_coordinates(const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_calculate_aquifer_coordinates(SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_aquifer_coordinates(nx, ny, xmin, xmax, ymin, ymax));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_distance_well
+NumericVector calculate_distance_well(const double& x0, const double& y0, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_calculate_distance_well(SEXP x0SEXP, SEXP y0SEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type y0(y0SEXP);
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_distance_well(x0, y0, nx, ny, xmin, xmax, ymin, ymax));
+    return rcpp_result_gen;
+END_RCPP
+}
 // theis_solution_space
-NumericMatrix theis_solution_space(const double& Q, const double& t, NumericVector hydrpar, NumericMatrix r);
-RcppExport SEXP _pumpingtest_theis_solution_space(SEXP QSEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP rSEXP) {
+NumericVector theis_solution_space(const double& Q, const double& x0, const double& y0, const double& t, NumericVector hydrpar, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_theis_solution_space(SEXP QSEXP, SEXP x0SEXP, SEXP y0SEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type y0(y0SEXP);
     Rcpp::traits::input_parameter< const double& >::type t(tSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type r(rSEXP);
-    rcpp_result_gen = Rcpp::wrap(theis_solution_space(Q, t, hydrpar, r));
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(theis_solution_space(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax));
+    return rcpp_result_gen;
+END_RCPP
+}
+// boulton_solution_space
+NumericVector boulton_solution_space(const double& Q, const double& x0, const double& y0, const double& t, NumericVector hydrpar, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_boulton_solution_space(SEXP QSEXP, SEXP x0SEXP, SEXP y0SEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type y0(y0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(boulton_solution_space(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax));
+    return rcpp_result_gen;
+END_RCPP
+}
+// papadopulos_solution_space
+NumericVector papadopulos_solution_space(const double& Q, const double& x0, const double& y0, const double& t, NumericVector hydrpar, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_papadopulos_solution_space(SEXP QSEXP, SEXP x0SEXP, SEXP y0SEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type y0(y0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(papadopulos_solution_space(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax));
+    return rcpp_result_gen;
+END_RCPP
+}
+// hantush_jacob_solution_space
+NumericVector hantush_jacob_solution_space(const double& Q, const double& x0, const double& y0, const double& t, NumericVector hydrpar, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_hantush_jacob_solution_space(SEXP QSEXP, SEXP x0SEXP, SEXP y0SEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type y0(y0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(hantush_jacob_solution_space(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax));
+    return rcpp_result_gen;
+END_RCPP
+}
+// space_calculation_via_string
+NumericVector space_calculation_via_string(std::string model, const double& Q, const double& x0, const double& y0, const double& t, NumericVector hydrpar, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_space_calculation_via_string(SEXP modelSEXP, SEXP QSEXP, SEXP x0SEXP, SEXP y0SEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type y0(y0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(space_calculation_via_string(model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax));
+    return rcpp_result_gen;
+END_RCPP
+}
+// infinite_aquifer_calculate_drawdown_cpp
+NumericMatrix infinite_aquifer_calculate_drawdown_cpp(std::string model, NumericVector Q, NumericVector x0, NumericVector y0, NumericVector t, NumericVector hydrpar, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_infinite_aquifer_calculate_drawdown_cpp(SEXP modelSEXP, SEXP QSEXP, SEXP x0SEXP, SEXP y0SEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y0(y0SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(infinite_aquifer_calculate_drawdown_cpp(model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -365,18 +571,29 @@ static const R_CallMethodDef CallEntries[] = {
     {"_pumpingtest_neuzil_WF_LT_cpp", (DL_FUNC) &_pumpingtest_neuzil_WF_LT_cpp, 4},
     {"_pumpingtest_callViaString", (DL_FUNC) &_pumpingtest_callViaString, 5},
     {"_pumpingtest_callViaXPtr", (DL_FUNC) &_pumpingtest_callViaXPtr, 5},
+    {"_pumpingtest_stehfest_inversion_vector_cpp", (DL_FUNC) &_pumpingtest_stehfest_inversion_vector_cpp, 6},
     {"_pumpingtest_stehfest_inversion_cpp", (DL_FUNC) &_pumpingtest_stehfest_inversion_cpp, 6},
     {"_pumpingtest_theis_well_function_cpp", (DL_FUNC) &_pumpingtest_theis_well_function_cpp, 4},
     {"_pumpingtest_erf_cpp", (DL_FUNC) &_pumpingtest_erf_cpp, 1},
     {"_pumpingtest_boulton_well_function_cpp", (DL_FUNC) &_pumpingtest_boulton_well_function_cpp, 4},
+    {"_pumpingtest_boulton_well_function_vector_cpp", (DL_FUNC) &_pumpingtest_boulton_well_function_vector_cpp, 4},
     {"_pumpingtest_hantush_jacob_well_function_cpp", (DL_FUNC) &_pumpingtest_hantush_jacob_well_function_cpp, 4},
+    {"_pumpingtest_hantush_jacob_well_function_vector_cpp", (DL_FUNC) &_pumpingtest_hantush_jacob_well_function_vector_cpp, 4},
     {"_pumpingtest_general_radial_flow_well_function_cpp", (DL_FUNC) &_pumpingtest_general_radial_flow_well_function_cpp, 4},
     {"_pumpingtest_papadopulos_cooper_well_function_cpp", (DL_FUNC) &_pumpingtest_papadopulos_cooper_well_function_cpp, 4},
+    {"_pumpingtest_papadopulos_cooper_well_function_vector_cpp", (DL_FUNC) &_pumpingtest_papadopulos_cooper_well_function_vector_cpp, 4},
     {"_pumpingtest_cooper_well_function_cpp", (DL_FUNC) &_pumpingtest_cooper_well_function_cpp, 4},
     {"_pumpingtest_neuzil_well_function_cpp", (DL_FUNC) &_pumpingtest_neuzil_well_function_cpp, 4},
     {"_pumpingtest_agarwal_skin_well_function_cpp", (DL_FUNC) &_pumpingtest_agarwal_skin_well_function_cpp, 4},
     {"_pumpingtest_warren_root_well_function_cpp", (DL_FUNC) &_pumpingtest_warren_root_well_function_cpp, 4},
-    {"_pumpingtest_theis_solution_space", (DL_FUNC) &_pumpingtest_theis_solution_space, 4},
+    {"_pumpingtest_calculate_aquifer_coordinates", (DL_FUNC) &_pumpingtest_calculate_aquifer_coordinates, 6},
+    {"_pumpingtest_calculate_distance_well", (DL_FUNC) &_pumpingtest_calculate_distance_well, 8},
+    {"_pumpingtest_theis_solution_space", (DL_FUNC) &_pumpingtest_theis_solution_space, 11},
+    {"_pumpingtest_boulton_solution_space", (DL_FUNC) &_pumpingtest_boulton_solution_space, 11},
+    {"_pumpingtest_papadopulos_solution_space", (DL_FUNC) &_pumpingtest_papadopulos_solution_space, 11},
+    {"_pumpingtest_hantush_jacob_solution_space", (DL_FUNC) &_pumpingtest_hantush_jacob_solution_space, 11},
+    {"_pumpingtest_space_calculation_via_string", (DL_FUNC) &_pumpingtest_space_calculation_via_string, 12},
+    {"_pumpingtest_infinite_aquifer_calculate_drawdown_cpp", (DL_FUNC) &_pumpingtest_infinite_aquifer_calculate_drawdown_cpp, 12},
     {NULL, NULL, 0}
 };
 
