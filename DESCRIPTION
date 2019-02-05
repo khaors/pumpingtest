@@ -11,7 +11,10 @@ License: GPL
 Imports: Rcpp (>= 1.0.0), dplyr, ggplot2, stringi, stringr, KernSmooth, locpol, lokern, lpridge, pracma, Matrix, matrixcalc, stats, mvtnorm, DEoptim, GA, GenSA, copulaedas, gridExtra, methods,minpack.lm, pso, shiny, rhandsontable, shinyalert, grid, GGally
 LinkingTo: Rcpp
 RoxygenNote: 6.1.1
-Suggests: testthat
+Suggests: testthat, 
+  knitcitations, 
+  knitr
+VignetteBuilder: knitr
 BugReports: https://github.com/khaors/pumpingtest/issues
 URL: https://github.com/khaors/pumpingtest
 Encoding: UTF-8

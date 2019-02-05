@@ -1,0 +1,293 @@
+---
+title: "pumpingtest: Analysis and Evaluation of Pumping Test Data in R"
+author: "Oscar Garcia-Cabrejo"
+date: "`r Sys.Date()`"
+output: 
+   rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pumpingtest: Analysis and Evaluation of Pumping Test Data in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+
+bibliography: "references_pumpingtest1.bib"
+---
+
+``` {r setup,include = FALSE} 
+library("knitcitations")
+cleanbib()
+options("citation_format" = "pandoc")
+bib <- read.bibtex("references_pumpingtest.bib")
+```
+
+This document defines the basic concepts, governing equations, numerical procedures,
+organization of functions and show some examples of analysis and evaluation of
+pumping test data using the package PumpingTest. 
+
+
+## Pumping Test
+
+A pumping test is a field experiment in which water is extracted from well  at a
+controlled rate and the change in water level (drawdown) is measured in one or
+more observation wells and optionally in the pumped well. This information from
+pumping tests are used to estimate the hydraulic properties of aquifers (Transmisivity
+and Storage coefficient), evaluate the well performance and identify aquifer boundaries.
+Aquifer test and aquifer performance test (APT) are other terms to designate a pumping
+test.
+
+The analysis and evaluation of pumping test data are necessary to propose solutions to
+specific groundwater problems. In the analysis stage, the measurements of the response
+of the aquifer system (drawdown) are used to understand the structure and functioning of
+the flow system. Specifically, the definition of the aquifer type, identification of the
+sources and sinks, and the estimation of the hydraulic parameters of the aquifer unit
+are the main results in this stage. The conventional estimation of the hydraulic parameters
+is based on the use of graphical methods and tables, but this procedure can be approached
+as a nonlinear regression problem if analytical expressions of the response of the aquifer
+to the water extraction are available. 
+
+In the evaluation stage, the analytical model identified as the most representative of the
+aquifer conditions along with the hydraulic parameters (Transmissivity and Storage
+coefficient) are used in the prediction of the drawdown in space and/or time.
+These predictions are critical to determine the effect of water extraction on the vecinity
+of the pumping well under real or hypothetical conditions. 
+
+## Governing Equations
+
+The general description of the flow of water in porous media is given by the continuity equation in cylindrical coordinates:
+$$
+\frac{1}{r}\frac{\partial}{\partial r}\left( r\frac{\partial s}{\partial r} \right) = \frac{S}{T}\frac{\partial s}{\partial t}
+$$
+
+where $s$ is the drawdown, $r$ is the distance between the pumping and observation well, $t$ is the time, $Q$ is the pumping rate, $q$ is a term to include all the sources and sinks, $S$ is the storage coefficient and $T$ is the transmissivity.
+
+The general solution of the previous equation can be expressed as:
+$$
+s(r,t) = \frac{Q}{4 \pi T} W(\boldsymbol{\theta})
+$$
+where  $W(\boldsymbol{\theta})$ is the so called well function and $\boldsymbol{\theta}$ is a vector of parameters (including Transmissivity, Storage coefficient and others). The importance of the well function lies in that this describes the nondimensional change of the drawdown with respect to time, and therefore the previous equation implies that the drawdown for a specific well can be obtained via rescaling of the corresponding well function.
+
+There are few cases where analytical expression of the well function $W(\boldsymbol{\theta})$ can be obtained. EXAMPLES?. This implies that for the majority of cases this well function is obtained using numerical methods. The preferred numerical method used to solve the original continuity equation in cylindrical coordinates is the Laplace Transform `r citep(bib[["doetsch1974"]])`. The basic idea of this transform is to convert a partial differential equation into an ordinary differential equation by removing the time variable. Once the ordinary differential equation is solved, then the inverse Laplace Transform is applied to recover the solution in the original space. The conventional approach to recover this solution is based on visual inspection of a table of inverse transforms of a set of functions but in most cases, it is not possible to obtain a close analytical expression for the solution of the ODE, and that is why the numerical approach is used. The inverse Laplace Transform is calculated using the Stehfest algorithm `r citet("10.1145/361953.361969")` which has proven to be stable for the calculations required for the estimation of the pumping tests. 
+
+## Parameter Estimation
+
+Nonlinear Regression
+
+
+## Package Organization
+
+The PumpingTest package is based on the definition of a S3 class called _pumping\_test_ that is used to store the following information:
+
+* Well ID
+* Pumping rate $Q$
+* Distance to pumping well $r$
+* Numeric vectors with time and drawdown values $(t_{i},s_{i}),i=1,\ldots,n$
+
+There are basic functions associated with this S3 class including:
+
+* print: shows the information of time and drawdown on the screen.
+* summary: prints a statistical summary of the drawdown data.
+* plot: create different kinds of plots including diagnostic, estimation, model diagnostic, and a 
+* fit: estimate the hydraulic parameters using the information from the pumping test and an identified aquifer model.
+* evaluate: calculate the drawdown in space and time from a given set of hydraulic parameters.
+* confint: estimate the confidence intervals of the hydraulic parameters using different methods.
+
+This package includes different types of plots. The diagnostic plot created using the _plot_ function is of one of the most important tools for the analysis of pumping test data, and it includes the plot of the drawdown in function of time and the plot of the derivative of drawdown with respect to the log of time in the same figure. From the variation showed by the derivative it is possible to identify the different flow regime present during the test and therefore the most likely models that explains the observed variations in draawdown `r citep("10.2118/16812-PA")`. In the estimation plot, the drawdown and its derivative with respest to time and their corresponding curves defined with the fitted parameters are shown in the sampe figure. This is an important tool to assess the fit provided by the estimaed parameters, and to identify the measurements that do not follow the fitted model. If the hydrogeologist determines that the obtained fit does not represent the observed data, then the problematic measurements can be removed and the estimation starts again.  
+
+The _pumping\_test_ package includes the following analytical solutions that can be used in different types of geological conditions. The base names of the solutions included in this package are the following: 
+
+| Solution Name | Conditions                       |
+|---------------|----------------------------------|
+| theis         | Confined aquifer|
+| cooper\_jacob  | Confined aquifer|
+| hantush\_jacob | Confined Leaky aquifer|
+| boulton       | Phreatic aquifer|
+| cooper        | Slug test |
+| agarwal       | Recovery test |
+| agarwal       | Wellbore storage |
+| general\_radial\_flow | Fractured aquifer |
+| neuzil        | Slug test (Pulse) |
+| papadopoulous\_cooper | Confined aquifer, large diameter well|
+| warren\_root | double porosity |
+| gringarten | Single fracture |
+
+In this package, cach analytical solution is implemented using 6 different functions:
+
+* __well\_function__: calculates the well function of the specific model calling the corresponding fuction that calculates the solution in the Laplace domain and the stehfest inversion.
+* __solution\_initial__: This is the self-starter function for the nonlinear regression function and calculates the initial value of the parameters to fit a specific model.  
+* __calculate\_parameters__: calculates the hydraulic parameters from the values of the fitting parameters
+* __solution__: calculates the drawdown 
+* __solution\_dlogt__: calculates the derivative of the drawdown with respect to the derivative of the logarithm of time. 
+* __WF\_LT__: calculates the well function (WF) in the Laplace domain
+
+where the name of the analytical solution is added as prefix:
+
+* theis_well_function, theis_solution_initial
+* boulton_well_function, boulton_WF_LT, boulton_calculate_parameters.
+
+## Example
+
+### Pumping Test in a Confined Aquifer
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+library("pumpingtest")
+```
+The drawdown data from the pumping test in a confined aquifer is save in the data.frame _theis_ included in the package. This data.frame is loaded using:
+```{r theis_load_data, echo = T}
+data(theis)
+```
+
+This data.frame is composed of two variables: 
+
+* t: Vector with the values of time when measurements were recorded
+* s: Vector with the values of drawdown
+
+This drawdown was caused by a well withdrawing water at a pumping rate of  
+$Q=1.2\;\; l/s$ which is equivalent to $Q=1.388 \times 10^{-2}\;\;m^{3}/s$, and located at  $r=250\;\;m$ from the observation well. The pumping_test object is defined using:
+
+```{r theis_define_pumping_test, echo = T}
+ptest.theis <- pumping_test("Well 1", Q = 1.3888e-2, r = 250, t = theis$t, s = theis$s)
+```
+
+
+```{r plot_theis,fig.height=4,fig.width=6,fig.align='center'}
+p1 <- plot(ptest.theis)
+print(p1)
+```
+
+#### Diagnostic Plots
+
+The diagnostic plot is the default option in the _plot_ function, in which the derivative of the drawdown with respect to the logarithm of time is calculated via central differences. The drawdown derivative is very sensitive to the noise present in the drawdown measurements and therefore it is advisable to create the diagnostic plot using different derivative types. In this case, four types of derivatives are used in the diagnostic plots:
+```{r theis_diagnostic_plot1, fig.width=8, fig.height=8, fig.align='center'}
+library(ggplot2)
+library(gridExtra)
+p.central <- plot(ptest.theis, dmethod = "central") +
+    theme(legend.position="bottom")
+p.horner <- plot(ptest.theis, dmethod = "horner") +
+    theme(legend.position="bottom")
+p.bourdet <- plot(ptest.theis, dmethod = "bourdet", d = 2) +
+    theme(legend.position="bottom")
+p.spline <- plot(ptest.theis, dmethod = "spline", d = 20) +
+    theme(legend.position="bottom")
+p.diagnostic <- grid.arrange(p.central, p.horner, p.bourdet, p.spline, 
+                             nrow = 2)
+print(p.diagnostic)
+```
+The drawdown data appears as black points while the derivative of drawdown is represented as red symbols. In all cases, the derivative shows an increasing behavior up to $500 \; s$ and then it seems to reach a plateau. However this is not very clear due to the high dispersion showed by the derivative estimates in the case of central finite differences, Horne's and Bourdet's approaches.  The only stable derivative is the one calculated using the spline approach, specially when $20-40$ samples are used in the interpolation step `r citep("10.1007/s10040-008-0392-0")`. 
+
+From the previous figures, it is clear that the derivative of the drawdown with respect to the logarithm of time shows an increasing behavior up to $t=500\;\;s$ and then it stabilizes with a value of $0.8$ approximately. This behaviour is typical of a confined  aquifer and therefore the Theis solution describes the variation displayed by the drawdown. Now that we know the model to be used to fit the data, let's estimate the hydraulic parameters.
+
+#### Parameter Estimation
+
+The function _fit_ is used to estimate the parameters of the model. In the _PumpingTest_ package, most of the models included are parametrized in terms of nuance parameters instead of the hydraulic properties of the aquifer. For the Theis model, the parameters are the slope $a$ and the intercept $t_{0}$ of the straight line fitted for the late measurements of drawdown where the logarithm of time is taken as the independent variable. The estimation of these parameters $a$ and $t_{0}$ is obtained via nonlinear regression using the _fit_ command:
+
+```{r theis_fit, echo = TRUE}
+ptest.fit <- fit(ptest.theis, "theis")
+```
+
+The output of this command is a list that contains three variables:
+
+* __parameters__: a list with the values of the nuance parameters $a$ and $t_{0}$
+* __hydraulic\_parameters__: a list with the values of transmissivity, storage coefficient and radius of influence
+* __nlsfit__: an object of the class _nls_ that contains all the information related to the nonlinear regression procedure used in the estimation of the nuance parameters.
+
+Let's take a look at the values of the nuance parameters accessing the parameters variable:
+
+```{r theis_fit1, echo = TRUE}
+ptest.fit$parameters
+```
+
+This shows that the value of $a=$ `r ptest.fit$parameters$a` and $t_{0}=$ `r ptest.fit$parameters$t0`. From these values the hydraulic parameters specific for this model are internally calculated by the _fit_ function using the _theis\_calculate\_parameters_ function and the results are: 
+
+```{r theis_fit2, echo = TRUE}
+ptest.fit$hydraulic_parameters
+Tr <- ptest.fit$hydraulic_parameters$Tr
+Ss <- ptest.fit$hydraulic_parameters$Ss
+Ri <- ptest.fit$hydraulic_parameters$radius_influence
+```
+
+which means that the transmissivity is equal to `r format(Tr, digits = 3, scientific = TRUE)` m2/s, the storage coefficient is `r format(Ss, digits = 3, scientific = TRUE)`, and the radius of influence is equal to `r format(Ri, digits = 3, scientific = TRUE)` m or `r format(Ri/1e3, digits = 3, scientific = TRUE)` km.
+
+Using the values of the hydraulic parameters, now it is possible to create the estimation plot. This requires the assignment of the results of the fitting procedure to the _pumping\_test_ object which is done using the following auxiliary functions:
+
+* _hydraulic.parameters_: assigns the hydraulic\_parameters variable to the _pumping\_test_ object
+```{r theis_fit3, echo = TRUE}
+hydraulic.parameters(ptest.theis) <- ptest.fit$hydraulic_parameters
+```
+* _fit.parameters_: assigns the nuance parameters to the _pumping\_test_ object
+```{r theis_fit4, echo = TRUE}
+fit.parameters(ptest.theis) <- ptest.fit$parameters
+```
+* _model_: assigns the model to the _pumping\_test_ object
+```{r theis_fit5, echo = TRUE}
+model(ptest.theis) <- "theis"
+```
+* _estimated_: specifies that the _pumping\_test_ object has the estimation information
+```{r theis_fit6, echo = TRUE}
+estimated(ptest.theis) <- TRUE
+```
+
+```{r theis_estimation, fig.height=4, fig.width=6, fig.align='center'}
+
+p.estimation <- plot(ptest.theis, type = "estimation", dmethod = "spline", 
+                     d = 30) 
+print(p.estimation)
+```
+
+The visual inspection of the previous figure shows that there is a good fit between the model and the drawdown measurements and even the derivative. These are good news but it is critical to be sure that the fitted model satisfy the assumptions behind a nonlinear regression model. If these conditions are not checked then it is not possible to be sure that the model is appropiate and therefore the predictions based upon these hydraulic parameters are correct. The tools to check the fitted model are presented in the next section.
+
+### Model Diagnostic
+The model fitted with nonlinear regression should satisfy the following conditions:
+
+* correct mean function 
+* mutually independent residuals (0 mean and uncorrelated)
+* residuals with variance homogeneity (homoscedasticity)
+* normally distributed residuals
+
+These assumptions can be checked informally using specialized plots which can be created using the plot function: 
+
+```{r theis_residuals, fig.height=6, fig.width=8, fig.align='center'}
+p.mod.diag <- plot(ptest.theis, type = 'model.diagnostic')
+print(p.mod.diag)
+```
+In the previous figure, each condition is checked by each plot. The first assumption of the fitted model can be checked using the a scatterplot of the measured and calculated drawdown (upper left plot). In this case the reproduction of the measured values is good as seen by the value of the correlation coefficient and the fact that all values lie close to the diagonal red line. The second assumption can be checked using the plot located on the upper right part of the figure. This shows a scatterplot between the calculated drawdown and the residuals, which shows that there are no relationship between them (no trend in the scatterplot) and the residual values lie around 0 (zero mean residuals). The local mean of the residua (red line) oscillates around 0. The variance of the residuals can be checked indirectly using the absolute residuals (lower left), which shows that there are no large variations. The fourth condition can be checked with a normal quantile plot as seen in the lower right part of the figure. There are deviations from the red line only at the tails of the residual distribution. From the previous figure, it is clear the all conditions of the nonlinear regression model are met and therefore the hydraulic parameters can be used with confidence.  
+
+### Uncertainty Quantification
+
+In this last step, the uncertainty in the estimates of the hydraulic parameters is quantified using a simple bootstrapp approach. This method is based on the defining a new drawdown curve using a new set of residuals obtained form the resampling with replacement of the original residuals. Then the hydraulic parameters are estimated for all the generated curves and with the results a probability density function for each parameter can be defined. Estimates of confidence intervals can be derived _nonparametrically_ from these probability density functions.
+
+The confidence intervals of the hydraulic parameters can be estimated using the __confint__ function:
+
+```{r theis_boot1,echo=TRUE}
+ptest.theis.ci <- confint(ptest.theis, level = c(0.025, 0.975), 
+                          method = "bootstrap", d = 20, 
+                          neval = 100, seed = 12346)
+```
+
+The results of the estimation are stored in the variable ptest.test.ci, and these results must be assigned to the ptest.theis object:
+
+```{r theis_boot2,echo=TRUE}
+hydraulic.parameters(ptest.theis) <- ptest.theis.ci$hydraulic.parameters
+hydraulic.parameter.names(ptest.theis) <- ptest.theis.ci$hydraulic.parameters.names
+estimated(ptest.theis) <- TRUE
+```
+
+The confidence intervals of the hydraulic parameters for the pumping test applied in a confined aquifer are shown in the following table.
+
+```{r theis_boot3, echo=FALSE, results='asis'}
+knitr::kable(ptest.theis.ci$hydraulic.parameters.ci, 
+             caption = "Theis solution. Confindence intervals of the Hydraulic Parameters")
+```
+
+The uncertainty plot can be created using the __plot__ function:
+
+```{r theis_boot4,fig.height=6,fig.width=8,fig.align='center'}
+p.uncert <- plot(ptest.theis, type = "uncertainty")
+print(p.uncert)
+```
+
+The previous figure shows along the diagonals the probability density function of the hydraulic parameters estimated using 100 boostrap realizations. The probability distributions of these parameters are unimodal and nearly symmetric in all cases. On the off-diagonals, the scatterplots of the hydraulic parameters are shown where it is clear that the transmissivity and storage coefficient are not independent of each other, and this implies that in reality there is one single parameter defining the model. This parameter is called hydraulic diffusivity which is defined as the ratio of the transmissivity to the storage coefficient. 
+
+## References
+
+```{r bib,echo=FALSE, message=FALSE}
+write.bibtex(file="references_pumpingtest1.bib")
+```
