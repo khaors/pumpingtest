@@ -67,11 +67,6 @@ where  $W(\boldsymbol{\theta})$ is the so called well function and $\boldsymbol{
 
 There are few cases where analytical expression of the well function $W(\boldsymbol{\theta})$ can be obtained. EXAMPLES?. This implies that for the majority of cases this well function is obtained using numerical methods. The preferred numerical method used to solve the original continuity equation in cylindrical coordinates is the Laplace Transform `r citep(bib[["doetsch1974"]])`. The basic idea of this transform is to convert a partial differential equation into an ordinary differential equation by removing the time variable. Once the ordinary differential equation is solved, then the inverse Laplace Transform is applied to recover the solution in the original space. The conventional approach to recover this solution is based on visual inspection of a table of inverse transforms of a set of functions but in most cases, it is not possible to obtain a close analytical expression for the solution of the ODE, and that is why the numerical approach is used. The inverse Laplace Transform is calculated using the Stehfest algorithm `r citet("10.1145/361953.361969")` which has proven to be stable for the calculations required for the estimation of the pumping tests. 
 
-## Parameter Estimation
-
-Nonlinear Regression
-
-
 ## Package Organization
 
 The PumpingTest package is based on the definition of a S3 class called _pumping\_test_ that is used to store the following information:
@@ -86,11 +81,30 @@ There are basic functions associated with this S3 class including:
 * print: shows the information of time and drawdown on the screen.
 * summary: prints a statistical summary of the drawdown data.
 * plot: create different kinds of plots including diagnostic, estimation, model diagnostic, and a 
-* fit: estimate the hydraulic parameters using the information from the pumping test and an identified aquifer model.
+* fit: estimate the hydraulic parameters using nonlinear regression with the information from the pumping test and an identified aquifer model.
+* fit.optimization: estimate the hydraulic parameters using one of several optimization tecniques show in the following table
+* fit.sampling: estimate the hydraulic parameters using bayesian methods
 * evaluate: calculate the drawdown in space and time from a given set of hydraulic parameters.
 * confint: estimate the confidence intervals of the hydraulic parameters using different methods.
 
-This package includes different types of plots. The diagnostic plot created using the _plot_ function is of one of the most important tools for the analysis of pumping test data, and it includes the plot of the drawdown in function of time and the plot of the derivative of drawdown with respect to the log of time in the same figure. From the variation showed by the derivative it is possible to identify the different flow regime present during the test and therefore the most likely models that explains the observed variations in draawdown `r citep("10.2118/16812-PA")`. In the estimation plot, the drawdown and its derivative with respest to time and their corresponding curves defined with the fitted parameters are shown in the sampe figure. This is an important tool to assess the fit provided by the estimaed parameters, and to identify the measurements that do not follow the fitted model. If the hydrogeologist determines that the obtained fit does not represent the observed data, then the problematic measurements can be removed and the estimation starts again.  
+
+The _fit.optimization_ function can be used with the following optimization methods:
+
+|Optimization method | Package |
+|--------------------|---------|
+|Nonlinear Regression |minpack.lm|
+|Quasi-Newton method |optim|
+|Simulated Annealing |GenSA|
+|Genetic Algorithms |GA|
+|Particle Swarm Optimization |pso|
+|Differential Evolution | DEoptim| 
+
+The _fit.samping_ function can be used with the following MCMC methods:
+
+* Adaptative MCMC
+* t-walk `r citep("10.1214/10-BA603")`
+
+This package includes different types of plots. The diagnostic plot created using the _plot_ function is of one of the most important tools for the analysis of pumping test data, and it includes the plot of the drawdown in function of time and the plot of the derivative of drawdown with respect to the log of time in the same figure. From the variation showed by the derivative it is possible to identify the different flow regime present during the test and therefore the most likely models that explains the observed variations in drawdown `r citep("10.2118/16812-PA")`. In the estimation plot, the drawdown and its derivative with respest to time and their corresponding curves defined with the fitted parameters are shown in the sampe figure. This is an important tool to assess the fit provided by the estimaed parameters, and to identify the measurements that do not follow the fitted model. If the hydrogeologist determines that the obtained fit does not represent the observed data, then the problematic measurements can be removed and the estimation starts again.  
 
 The _pumping\_test_ package includes the following analytical solutions that can be used in different types of geological conditions. The base names of the solutions included in this package are the following: 
 
