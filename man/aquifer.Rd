@@ -29,13 +29,20 @@ aquifer(name, solution, type, xlim, ylim, nx, ny, hydraulic.pars)
 
 \item{ny}{Integer with the number of nodes in the y direction}
 
-\item{hydraulic.pars}{A list with the hydraulic parameters of the aquifer}
+\item{hydraulic.pars}{A numeric vector with the hydraulic parameters of the aquifer}
 }
 \value{
 This function returns an aquifer object
 }
 \description{
 Function to create an aquifer object
+}
+\examples{
+aq <- aquifer(name = "Fm.Macondo", solution = "theis", type = "infinite", 
+xlim = c(0, 10e3), ylim = c(0,10e3), 
+nx = 100, ny = 100, 
+hydraulic.pars = c(1.5e-4, 2e-5))
+print(aq) 
 }
 \seealso{
 Other aquifer functions: \code{\link{add.well<-}},

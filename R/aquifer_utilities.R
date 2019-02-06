@@ -24,13 +24,19 @@ NULL
 #' @param ylim Numeric vector with limits of the aquifer in the y direction
 #' @param nx Integer with the number of nodes in the x direction
 #' @param ny Integer with the number of nodes in the y direction
-#' @param hydraulic.pars A list with the hydraulic parameters of the aquifer
+#' @param hydraulic.pars A numeric vector with the hydraulic parameters of the aquifer
 #' @return 
 #' This function returns an aquifer object
 #' @author 
 #' Oscar Garcia-Cabrejo, \email{khaors@gmail.com}
 #' @family aquifer functions
 #' @export
+#' @examples
+#' aq <- aquifer(name = "Fm.Macondo", solution = "theis", type = "infinite", 
+#' xlim = c(0, 10e3), ylim = c(0,10e3), 
+#' nx = 100, ny = 100, 
+#' hydraulic.pars = c(1.5e-4, 2e-5))
+#' print(aq) 
 aquifer <- function(name, solution, type, xlim, ylim, nx, ny, hydraulic.pars){
   res <- list(name = name,
               solution = solution,
@@ -91,12 +97,21 @@ print.aquifer <- function(x, ...){
   if(class(x) != "aquifer"){
     stop("An aquifer object is required as input")
   }
-  print("Aquifer")
+  print("===Aquifer===")
   print(paste0("Name = ", x$name))
+  print(paste0("Solution = ", x$solution))
   print(paste0("Type= ", x$type))
-  print(paste0("X Dim ", as.character(x$xmin), ',' ,as.character(x$xmax)))
-  print(paste0("Y Dim ", as.character(x$xmin), ',', as.character(x$ymax)))
-  print(paste0("nx,ny"), as.character(x$nx), ',',  as.character(x$ny))
+  print(paste0("X Dim= ", as.character(x$xlim[1]), ',' ,as.character(x$xlim[2])))
+  print(paste0("Y Dim= ", as.character(x$ylim[1]), ',', as.character(x$ylim[2])))
+  print(paste0("nx,ny= ", as.character(x$nx), ',',  as.character(x$ny)))
+  if(!is.null(x$well.discharge)){
+    nwells <- length(x$well.discharge)
+    print(paste0("Number of wells= ", nwells))
+    print("Dicharges ")
+    print(x$well.discharge)
+    print("Well Coordinates")
+    print(cbind(x$well.coords.x, x$well.coords.y))
+  }
 }
 #' @title
 #' add.well<-
@@ -134,6 +149,33 @@ print.aquifer <- function(x, ...){
 #' Oscar Garcia-Cabrejo, \email{khaors@gmail.com} 
 #' @family aquifer functions
 #' @export
+#' @examples 
+#' \dontrun{
+#' library(sp)
+#' aq <- aquifer(name = "Fm.Macondo", solution = "theis", type = "infinite", 
+#'               xlim = c(0, 10e3), ylim = c(0,10e3), 
+#'               nx = 100, ny = 100,
+#'               hydraulic.pars = c(1.5e-4, 2e-5))
+#'               
+#' add.well(aq) <- list(Q = c(1.3e-3, 1.5e-3, 1e-3), x0 = c(5e3, 2.5e3, 7.5e3), 
+#'                      y0 = c(5e3, 2.5e3, 2.5e3))
+#'                      
+#' res <- calculate_drawdown(aq, current.times = 86400*seq(1,10,by=1))
+#' res.df <- data.frame(res)
+#' var.names <- vector("character", length = 10)
+#' for(i in 1:10){
+#'   var.names[i] <- paste0("Day", as.character(i))
+#' }
+#' names(res.df) <- var.names
+#' res.spdf <- SpatialPointsDataFrame(coords = cbind(aq$xcoords, aq$ycoords), 
+#'                                    data = res.df)
+#' gridded(res.spdf) <- TRUE
+#' for(i in 1:10){
+#'   current.var <- paste0("Day", as.character(i))
+#'   p <- spplot(res.spdf[current.var], main = current.var)
+#'   print(p)
+#' }
+#' }
 calculate_drawdown <- function(aq, current.times){
   if(class(aq) != 'aquifer'){
     stop("An aquifer object is required as input")

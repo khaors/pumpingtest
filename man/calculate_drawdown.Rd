@@ -18,6 +18,34 @@ the columns
 \description{
 Function to calculate the drawdown produced by well withdrawals at given times
 }
+\examples{
+\dontrun{
+library(sp)
+aq <- aquifer(name = "Fm.Macondo", solution = "theis", type = "infinite", 
+              xlim = c(0, 10e3), ylim = c(0,10e3), 
+              nx = 100, ny = 100,
+              hydraulic.pars = c(1.5e-4, 2e-5))
+              
+add.well(aq) <- list(Q = c(1.3e-3, 1.5e-3, 1e-3), x0 = c(5e3, 2.5e3, 7.5e3), 
+                     y0 = c(5e3, 2.5e3, 2.5e3))
+                     
+res <- calculate_drawdown(aq, current.times = 86400*seq(1,10,by=1))
+res.df <- data.frame(res)
+var.names <- vector("character", length = 10)
+for(i in 1:10){
+  var.names[i] <- paste0("Day", as.character(i))
+}
+names(res.df) <- var.names
+res.spdf <- SpatialPointsDataFrame(coords = cbind(aq$xcoords, aq$ycoords), 
+                                   data = res.df)
+gridded(res.spdf) <- TRUE
+for(i in 1:10){
+  current.var <- paste0("Day", as.character(i))
+  p <- spplot(res.spdf[current.var], main = current.var)
+  print(p)
+}
+}
+}
 \seealso{
 Other aquifer functions: \code{\link{add.well<-}},
   \code{\link{aquifer}}, \code{\link{print.aquifer}},
