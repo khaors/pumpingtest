@@ -149,6 +149,33 @@ the columns</p>
   <code><a href='summary.aquifer.html'>summary.aquifer</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sp</span>)
+<span class='no'>aq</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aquifer.html'>aquifer</a></span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Fm.Macondo"</span>, <span class='kw'>solution</span> <span class='kw'>=</span> <span class='st'>"theis"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"infinite"</span>,
+              <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>10e3</span>), <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>10e3</span>),
+              <span class='kw'>nx</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>ny</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+              <span class='kw'>hydraulic.pars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.5e-4</span>, <span class='fl'>2e-5</span>))
+
+<span class='fu'>add.well</span>(<span class='no'>aq</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>Q</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.3e-3</span>, <span class='fl'>1.5e-3</span>, <span class='fl'>1e-3</span>), <span class='kw'>x0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>5e3</span>, <span class='fl'>2.5e3</span>, <span class='fl'>7.5e3</span>),
+                     <span class='kw'>y0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>5e3</span>, <span class='fl'>2.5e3</span>, <span class='fl'>2.5e3</span>))
+
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_drawdown</span>(<span class='no'>aq</span>, <span class='kw'>current.times</span> <span class='kw'>=</span> <span class='fl'>86400</span>*<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>1</span>,<span class='fl'>10</span>,<span class='kw'>by</span><span class='kw'>=</span><span class='fl'>1</span>))
+<span class='no'>res.df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='no'>res</span>)
+<span class='no'>var.names</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/vector'>vector</a></span>(<span class='st'>"character"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>10</span>){
+  <span class='no'>var.names</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"Day"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>i</span>))
+}
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>res.df</span>) <span class='kw'>&lt;-</span> <span class='no'>var.names</span>
+<span class='no'>res.spdf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span>(<span class='no'>aq</span>$<span class='no'>xcoords</span>, <span class='no'>aq</span>$<span class='no'>ycoords</span>),
+                                   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>res.df</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/sp/topics/gridded-methods'>gridded</a></span>(<span class='no'>res.spdf</span>) <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
+<span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>10</span>){
+  <span class='no'>current.var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"Day"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>i</span>))
+  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/sp/topics/spplot'>spplot</a></span>(<span class='no'>res.spdf</span>[<span class='no'>current.var</span>], <span class='kw'>main</span> <span class='kw'>=</span> <span class='no'>current.var</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>p</span>)
+}
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -158,7 +185,9 @@ the columns</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     <p>Oscar Garcia-Cabrejo, <a href='mailto:khaors@gmail.com'>khaors@gmail.com</a></p>

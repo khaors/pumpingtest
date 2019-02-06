@@ -165,7 +165,7 @@
     </tr>
     <tr>
       <th>hydraulic.pars</th>
-      <td><p>A list with the hydraulic parameters of the aquifer</p></td>
+      <td><p>A numeric vector with the hydraulic parameters of the aquifer</p></td>
     </tr>
     </table>
     
@@ -181,6 +181,33 @@
   <code><a href='summary.aquifer.html'>summary.aquifer</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>aq</span> <span class='kw'>&lt;-</span> <span class='fu'>aquifer</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Fm.Macondo"</span>, <span class='kw'>solution</span> <span class='kw'>=</span> <span class='st'>"theis"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"infinite"</span>,
+<span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>10e3</span>), <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>10e3</span>),
+<span class='kw'>nx</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>ny</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+<span class='kw'>hydraulic.pars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.5e-4</span>, <span class='fl'>2e-5</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>aq</span>)</div><div class='output co'>#&gt; [1] "===Aquifer==="
+#&gt; [1] "Name = Fm.Macondo"
+#&gt; [1] "Solution = theis"
+#&gt; [1] "Type= infinite"
+#&gt; [1] "X Dim= 0,10000"
+#&gt; [1] "Y Dim= 0,10000"
+#&gt; [1] "nx,ny= 100,100"
+#&gt; [1] "Number of wells= 10"
+#&gt; [1] "Dicharges "
+#&gt;  [1] 0 0 0 0 0 0 0 0 0 0
+#&gt; [1] "Well Coordinates"
+#&gt;       [,1] [,2]
+#&gt;  [1,]    0    0
+#&gt;  [2,]    0    0
+#&gt;  [3,]    0    0
+#&gt;  [4,]    0    0
+#&gt;  [5,]    0    0
+#&gt;  [6,]    0    0
+#&gt;  [7,]    0    0
+#&gt;  [8,]    0    0
+#&gt;  [9,]    0    0
+#&gt; [10,]    0    0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -190,7 +217,9 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     <p>Oscar Garcia-Cabrejo, <a href='mailto:khaors@gmail.com'>khaors@gmail.com</a></p>
