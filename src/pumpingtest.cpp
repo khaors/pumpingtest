@@ -594,7 +594,7 @@ NumericVector warren_root_well_function_cpp(NumericVector td,
   NumericVector coeffs = stehfest_coefficients_cpp(8);
   W = stehfest_inversion_cpp(td, coeffs, "warren_root", par1, par2, par3);
   return(W);
-}                                            
+}                    
 // /*** R
 // par <- list(coeffs = stehfest_coeffs(8), sigma =0.1, phi = 0.1)
 //   microbenchmark(
@@ -892,3 +892,68 @@ NumericMatrix infinite_aquifer_calculate_drawdown_cpp(std::string model,
   }
   return(drawdown);
 }
+// 
+// [[Rcpp::export]]
+NumericVector constant_head_theis_well_function_cpp(const double& Q, 
+                                                    const double& r1, 
+                                                    const double& r2,
+                                                    NumericVector t,
+                                                    NumericVector hydrpar){
+  int ntimes = t.length();
+  NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
+  NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double Tr = hydrpar[0];
+  double Ss = hydrpar[1];
+  u1 = (r1*r1*Ss)/(4.0*Tr*t);
+  u2 = (r2*r2*Ss)/(4.0*Tr*t);
+  t1 = 1.0/u1;
+  t2 = 1.0/u2;
+  W1 = theis_well_function_cpp(t1, 0.0, 0.0, 0.0);
+  W2 = theis_well_function_cpp(t2, 0.0, 0.0, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*(W1-W2);
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector no_flow_theis_well_function_cpp(const double& Q, 
+                                              const double& r1, 
+                                              const double& r2,
+                                              NumericVector t,
+                                              NumericVector hydrpar){
+  int ntimes = t.length();
+  NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
+  NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double Tr = hydrpar[0];
+  double Ss = hydrpar[1];
+  u1 = (r1*r1*Ss)/(4.0*Tr*t);
+  u2 = (r2*r2*Ss)/(4.0*Tr*t);
+  t1 = 1.0/u1;
+  t2 = 1.0/u2;
+  W1 = theis_well_function_cpp(t1, 0.0, 0.0, 0.0);
+  W2 = theis_well_function_cpp(t2, 0.0, 0.0, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*(W1+W2);
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector no_flow_boulton_well_function_cpp(const double& Q, 
+                                                const double& r1, 
+                                                const double& r2,
+                                                NumericVector t,
+                                                NumericVector hydrpar){
+  int ntimes = t.length();
+  NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
+  NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double Tr = hydrpar[0];
+  double Ss = hydrpar[1];
+  u1 = (r1*r1*Ss)/(4.0*Tr*t);
+  u2 = (r2*r2*Ss)/(4.0*Tr*t);
+  t1 = 1.0/u1;
+  t2 = 1.0/u2;
+  W1 = boulton_well_function_cpp(t1, 0.0, 0.0, 0.0);
+  W2 = boulton_well_function_cpp(t2, 0.0, 0.0, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*(W1-W2);
+  return(drawdown);
+}
+//
+

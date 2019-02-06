@@ -556,6 +556,51 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// constant_head_theis_well_function_cpp
+NumericVector constant_head_theis_well_function_cpp(const double& Q, const double& r1, const double& r2, NumericVector t, NumericVector hydrpar);
+RcppExport SEXP _pumpingtest_constant_head_theis_well_function_cpp(SEXP QSEXP, SEXP r1SEXP, SEXP r2SEXP, SEXP tSEXP, SEXP hydrparSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type r1(r1SEXP);
+    Rcpp::traits::input_parameter< const double& >::type r2(r2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    rcpp_result_gen = Rcpp::wrap(constant_head_theis_well_function_cpp(Q, r1, r2, t, hydrpar));
+    return rcpp_result_gen;
+END_RCPP
+}
+// no_flow_theis_well_function_cpp
+NumericVector no_flow_theis_well_function_cpp(const double& Q, const double& r1, const double& r2, NumericVector t, NumericVector hydrpar);
+RcppExport SEXP _pumpingtest_no_flow_theis_well_function_cpp(SEXP QSEXP, SEXP r1SEXP, SEXP r2SEXP, SEXP tSEXP, SEXP hydrparSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type r1(r1SEXP);
+    Rcpp::traits::input_parameter< const double& >::type r2(r2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    rcpp_result_gen = Rcpp::wrap(no_flow_theis_well_function_cpp(Q, r1, r2, t, hydrpar));
+    return rcpp_result_gen;
+END_RCPP
+}
+// no_flow_boulton_well_function_cpp
+NumericVector no_flow_boulton_well_function_cpp(const double& Q, const double& r1, const double& r2, NumericVector t, NumericVector hydrpar);
+RcppExport SEXP _pumpingtest_no_flow_boulton_well_function_cpp(SEXP QSEXP, SEXP r1SEXP, SEXP r2SEXP, SEXP tSEXP, SEXP hydrparSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type r1(r1SEXP);
+    Rcpp::traits::input_parameter< const double& >::type r2(r2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    rcpp_result_gen = Rcpp::wrap(no_flow_boulton_well_function_cpp(Q, r1, r2, t, hydrpar));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_pumpingtest_factorial_cpp", (DL_FUNC) &_pumpingtest_factorial_cpp, 1},
@@ -594,6 +639,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_pumpingtest_hantush_jacob_solution_space", (DL_FUNC) &_pumpingtest_hantush_jacob_solution_space, 11},
     {"_pumpingtest_space_calculation_via_string", (DL_FUNC) &_pumpingtest_space_calculation_via_string, 12},
     {"_pumpingtest_infinite_aquifer_calculate_drawdown_cpp", (DL_FUNC) &_pumpingtest_infinite_aquifer_calculate_drawdown_cpp, 12},
+    {"_pumpingtest_constant_head_theis_well_function_cpp", (DL_FUNC) &_pumpingtest_constant_head_theis_well_function_cpp, 5},
+    {"_pumpingtest_no_flow_theis_well_function_cpp", (DL_FUNC) &_pumpingtest_no_flow_theis_well_function_cpp, 5},
+    {"_pumpingtest_no_flow_boulton_well_function_cpp", (DL_FUNC) &_pumpingtest_no_flow_boulton_well_function_cpp, 5},
     {NULL, NULL, 0}
 };
 

@@ -133,6 +133,7 @@ print.aquifer <- function(x, ...){
 #' @author 
 #' Oscar Garcia-Cabrejo, \email{khaors@gmail.com} 
 #' @family aquifer functions
+#' @export
 calculate_drawdown <- function(aq, current.times){
   if(class(aq) != 'aquifer'){
     stop("An aquifer object is required as input")
@@ -142,20 +143,36 @@ calculate_drawdown <- function(aq, current.times){
     stop("A numeric vector is required as input")
   }
   #
+  if(is.null(aq$well.discharge)){
+    stop("Discharge has not been assigned to the wells")
+  }
+  #
+  if(is.null(aq$well.coords.x) || is.null(aq$well.coords.y)){
+    stop("Coordinates has not been assigned to the wells")
+  }
+  #
+  if(is.null(aq$xlim) || is.null(aq$ylim)){
+    stop('The aquifer limits have not been defined')
+  }
+  #
+  if(is.null(aq$nx) || is.null(aq$ny)){
+    stop('The aquifer discretization has not been defined')
+  }
+  #
   res <- NULL
   if(aq$type == 'infinite'){
-    res <- infinite_aquifer_calculate_drawdown_cpp(model = aq$type,
-                                                   Q = aq$Q, 
-                                                   x0 = aq$well_coordinates_x, 
-                                                   y0 = aq$well_coordinates_y,
-                                                   t = current.times, 
-                                                   hydrpar = aq$hydraulic.parameters, 
+    res <- infinite_aquifer_calculate_drawdown_cpp(model = aq$solution,
+                                                   Q = as.numeric(aq$well.discharge), 
+                                                   x0 = as.numeric(aq$well.coords.x), 
+                                                   y0 = as.numeric(aq$well.coords.y),
+                                                   t = as.numeric(current.times), 
+                                                   hydrpar = as.numeric(aq$hydraulic.parameters), 
                                                    nx = aq$nx, 
                                                    ny = aq$ny, 
-                                                   xmin = aq$xmin, 
-                                                   xmax = aq$xmax, 
-                                                   ymin = aq$ymin, 
-                                                   ymax = aq$ymax)
+                                                   xmin = aq$xlim[1], 
+                                                   xmax = aq$xlim[2], 
+                                                   ymin = aq$ylim[1], 
+                                                   ymax = aq$ylim[2])
   }
   else{
     stop("Aquifer types is not currently supported")
