@@ -184,7 +184,7 @@ NumericVector cooper_WF_LT_cpp(NumericVector p,
       currentp = 1e-3;
     sp = sqrt(currentp);
     num = cd*R::bessel_k(sp, 0.0, 1);
-    den = (cd*currentp*R::bessel_k(sp, 0.0, 1) + sp*R::bessel_k(sp, 0.0, 1));
+    den = (cd*currentp*R::bessel_k(sp, 0.0, 1) + sp*R::bessel_k(sp, 1.0, 1));
     L[i] = num/den;
   }
   return(L);
