@@ -792,18 +792,44 @@ NumericVector hantush_jacob_solution_space(const double& Q, const double& x0,
                                          const double& ymax){
   NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
   dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
-  double Tr, Ss, rw, rc;
-  NumericVector W(nx*ny),rho(nx*ny),cd(1);
+  double Tr, Ss, K, b;
+  NumericVector W(nx*ny),rho(nx*ny),beta(nx*ny);
   Tr = hydrpar[0];
   Ss = hydrpar[1];
-  rw = hydrpar[2];
-  rc = hydrpar[3];
+  K = hydrpar[2];
+  b = hydrpar[3];
   u = (Ss*dist)/(4.0*Tr*t);
-  cd(1) = std::pow(rw, 2)*Ss/std::pow(rc, 2);
-  rho = dist/rw;
+  beta = std::sqrt(K/(b*Tr))*dist;
   td = 1.0/u;
-  W=hantush_jacob_well_function_vector_cpp(td, cd, rho, 0.0);
+  W=hantush_jacob_well_function_vector_cpp(td, beta, 0.0, 0.0);
   drawdown=(Q/(4.0*M_PI*Tr))*W;
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector general_radial_flow_solution_space(const double& Q, 
+                                                 const double& x0, 
+                                                 const double& y0, 
+                                                 const double& t, 
+                                                 NumericVector hydrpar, 
+                                                 const int& nx, 
+                                                 const int& ny,
+                                                 const double& xmin,
+                                                 const double& xmax,
+                                                 const double& ymin, 
+                                                 const double& ymax){
+  NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
+  dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
+  double Tr, Ss, n, rd;
+  NumericVector W(nx*ny),rho(nx*ny),beta(nx*ny);
+  Tr = hydrpar[0];
+  Ss = hydrpar[1];
+  n = hydrpar[2];
+  rd = hydrpar[3];
+  u = (Ss*dist)/(4.0*Tr*t);
+  td = 1.0/u;
+  W = general_radial_flow_well_function_cpp(td, n, rd, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*W;
   return(drawdown);
 }
 //
@@ -825,6 +851,12 @@ XPtr<spacefuncPtr> putSpaceFunPtrInXPtr(std::string fstr) {
     return(XPtr<spacefuncPtr>(new spacefuncPtr(&theis_solution_space)));
   if (fstr == "boulton")
     return(XPtr<spacefuncPtr>(new spacefuncPtr(&boulton_solution_space)));
+  else if (fstr == "hantush_jacob")
+    return(XPtr<spacefuncPtr>(new spacefuncPtr(&hantush_jacob_solution_space)));
+  else if(fstr == "papadopulos_cooper")
+    return(XPtr<spacefuncPtr>(new spacefuncPtr(&papadopulos_solution_space)));
+  else if(fstr == "general_radial_flow" || fstr == "grf")
+    return(XPtr<spacefuncPtr>(new spacefuncPtr(&general_radial_flow_solution_space)));
   else
     return XPtr<spacefuncPtr>(R_NilValue); // runtime error as NULL no XPtr
 }
@@ -932,6 +964,32 @@ NumericVector no_flow_theis_well_function_cpp(const double& Q,
   W1 = theis_well_function_cpp(t1, 0.0, 0.0, 0.0);
   W2 = theis_well_function_cpp(t2, 0.0, 0.0, 0.0);
   drawdown = (Q/(4.0*M_PI*Tr))*(W1+W2);
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector constant_head_boulton_well_function_cpp(const double& Q, 
+                                                      const double& r1, 
+                                                      const double& r2, 
+                                                      NumericVector t, 
+                                                      NumericVector hydrpar){
+  int ntimes = t.length();
+  NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
+  NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double phi1,phi2;
+  double Tr = hydrpar[0];
+  double Ss = hydrpar[1];
+  double alpha1 = hydrpar[2];
+  double sigma = hydrpar[3];
+  u1 = (r1*r1*Ss)/(4.0*Tr*t);
+  u2 = (r2*r2*Ss)/(4.0*Tr*t);
+  t1 = 1.0/u1;
+  t2 = 1.0/u2;
+  phi1=alpha1*r1*r1*Ss/Tr;
+  phi2=alpha1*r2*r2*Ss/Tr;
+  W1 = boulton_well_function_cpp(t1, phi1, sigma, 0.0);
+  W2 = boulton_well_function_cpp(t2, phi2, sigma, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*(W1-W2);
   return(drawdown);
 }
 //

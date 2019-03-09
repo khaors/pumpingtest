@@ -137,6 +137,10 @@ hantush_jacob_solution_space <- function(Q, x0, y0, t, hydrpar, nx, ny, xmin, xm
     .Call('_pumpingtest_hantush_jacob_solution_space', PACKAGE = 'pumpingtest', Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
 }
 
+general_radial_flow_solution_space <- function(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_general_radial_flow_solution_space', PACKAGE = 'pumpingtest', Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
+}
+
 space_calculation_via_string <- function(model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
     .Call('_pumpingtest_space_calculation_via_string', PACKAGE = 'pumpingtest', model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
 }
@@ -151,6 +155,10 @@ constant_head_theis_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
 
 no_flow_theis_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
     .Call('_pumpingtest_no_flow_theis_well_function_cpp', PACKAGE = 'pumpingtest', Q, r1, r2, t, hydrpar)
+}
+
+constant_head_boulton_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
+    .Call('_pumpingtest_constant_head_boulton_well_function_cpp', PACKAGE = 'pumpingtest', Q, r1, r2, t, hydrpar)
 }
 
 no_flow_boulton_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
