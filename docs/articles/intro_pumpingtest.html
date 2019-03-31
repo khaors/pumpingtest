@@ -80,7 +80,7 @@
       <h1>pumpingtest: Analysis and Evaluation of Pumping Test Data in R</h1>
                         <h4 class="author">Oscar Garcia-Cabrejo</h4>
             
-            <h4 class="date">2019-02-06</h4>
+            <h4 class="date">2019-03-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khaors/pumpingtest/blob/master/vignettes/intro_pumpingtest.Rmd"><code>vignettes/intro_pumpingtest.Rmd</code></a></small>
       <div class="hidden name"><code>intro_pumpingtest.Rmd</code></div>
@@ -278,18 +278,18 @@ s(r,t) = \frac{Q}{4 \pi T} W(\boldsymbol{\theta})
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(gridExtra)
 p.central &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"central"</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.horner &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"horner"</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.bourdet &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"bourdet"</span>, <span class="dt">d =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.spline &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"spline"</span>, <span class="dt">d =</span> <span class="dv">20</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.diagnostic &lt;-<span class="st"> </span><span class="kw">grid.arrange</span>(p.central, p.horner, p.bourdet, p.spline, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.diagnostic &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(p.central, p.horner, p.bourdet, p.spline, 
                              <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="intro_pumpingtest_files/figure-html/theis_diagnostic_plot1-1.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.diagnostic)</code></pre></div>
@@ -320,20 +320,20 @@ p.central &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 <p>Let’s take a look at the values of the nuance parameters accessing the parameters variable:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.fit<span class="op">$</span>parameters</code></pre></div>
 <pre><code>## $a
-## [1] 1.785659
+## [1] 1.785655
 ## 
 ## $t0
-## [1] 413.0357</code></pre>
-<p>This shows that the value of <span class="math inline">\(a=\)</span> 1.7856586 and <span class="math inline">\(t_{0}=\)</span> 413.0356537. From these values the hydraulic parameters specific for this model are internally calculated by the <em>fit</em> function using the <em>theis_calculate_parameters</em> function and the results are:</p>
+## [1] 413.0328</code></pre>
+<p>This shows that the value of <span class="math inline">\(a=\)</span> 1.7856545 and <span class="math inline">\(t_{0}=\)</span> 413.0328271. From these values the hydraulic parameters specific for this model are internally calculated by the <em>fit</em> function using the <em>theis_calculate_parameters</em> function and the results are:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.fit<span class="op">$</span>hydraulic_parameters</code></pre></div>
 <pre><code>## $Tr
-## [1] 0.001425106
+## [1] 0.001425109
 ## 
 ## $Ss
-## [1] 2.115112e-05
+## [1] 2.115102e-05
 ## 
 ## $radius_influence
-## [1] 2843.463</code></pre>
+## [1] 2843.472</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tr &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>Tr
 Ss &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>Ss
 Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>radius_influence</code></pre></div>
@@ -425,8 +425,8 @@ Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_par
 </tr>
 <tr class="odd">
 <td>radius_influence</td>
-<td align="right">2789.8089444</td>
-<td align="right">2917.3024484</td>
+<td align="right">2789.8145722</td>
+<td align="right">2917.3119298</td>
 </tr>
 </tbody>
 </table>
