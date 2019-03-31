@@ -533,6 +533,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// agarwal_skin_solution_space
+NumericVector agarwal_skin_solution_space(const double& Q, const double& x0, const double& y0, const double& t, NumericVector hydrpar, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
+RcppExport SEXP _pumpingtest_agarwal_skin_solution_space(SEXP QSEXP, SEXP x0SEXP, SEXP y0SEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const double& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type y0(y0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type hydrpar(hydrparSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nx(nxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type ny(nySEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type xmax(xmaxSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymin(yminSEXP);
+    Rcpp::traits::input_parameter< const double& >::type ymax(ymaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(agarwal_skin_solution_space(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax));
+    return rcpp_result_gen;
+END_RCPP
+}
 // space_calculation_via_string
 NumericVector space_calculation_via_string(std::string model, const double& Q, const double& x0, const double& y0, const double& t, NumericVector hydrpar, const int& nx, const int& ny, const double& xmin, const double& xmax, const double& ymin, const double& ymax);
 RcppExport SEXP _pumpingtest_space_calculation_via_string(SEXP modelSEXP, SEXP QSEXP, SEXP x0SEXP, SEXP y0SEXP, SEXP tSEXP, SEXP hydrparSEXP, SEXP nxSEXP, SEXP nySEXP, SEXP xminSEXP, SEXP xmaxSEXP, SEXP yminSEXP, SEXP ymaxSEXP) {
@@ -734,6 +755,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_pumpingtest_papadopulos_solution_space", (DL_FUNC) &_pumpingtest_papadopulos_solution_space, 11},
     {"_pumpingtest_hantush_jacob_solution_space", (DL_FUNC) &_pumpingtest_hantush_jacob_solution_space, 11},
     {"_pumpingtest_general_radial_flow_solution_space", (DL_FUNC) &_pumpingtest_general_radial_flow_solution_space, 11},
+    {"_pumpingtest_agarwal_skin_solution_space", (DL_FUNC) &_pumpingtest_agarwal_skin_solution_space, 11},
     {"_pumpingtest_space_calculation_via_string", (DL_FUNC) &_pumpingtest_space_calculation_via_string, 12},
     {"_pumpingtest_infinite_aquifer_calculate_drawdown_cpp", (DL_FUNC) &_pumpingtest_infinite_aquifer_calculate_drawdown_cpp, 12},
     {"_pumpingtest_constant_head_theis_well_function_cpp", (DL_FUNC) &_pumpingtest_constant_head_theis_well_function_cpp, 5},

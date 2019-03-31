@@ -141,6 +141,10 @@ general_radial_flow_solution_space <- function(Q, x0, y0, t, hydrpar, nx, ny, xm
     .Call('_pumpingtest_general_radial_flow_solution_space', PACKAGE = 'pumpingtest', Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
 }
 
+agarwal_skin_solution_space <- function(Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
+    .Call('_pumpingtest_agarwal_skin_solution_space', PACKAGE = 'pumpingtest', Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
+}
+
 space_calculation_via_string <- function(model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax) {
     .Call('_pumpingtest_space_calculation_via_string', PACKAGE = 'pumpingtest', model, Q, x0, y0, t, hydrpar, nx, ny, xmin, xmax, ymin, ymax)
 }

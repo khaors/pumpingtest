@@ -747,7 +747,7 @@ NumericVector boulton_solution_space(const double& Q, const double& x0,
   alpha1 = hydrpar[3];
   sigma(1) = Ss/Sy;
   phi = (alpha1*dist*dist*Ss)/(Tr);
-  u = (Ss*dist)/(4.0*Tr*t);
+  u = (Ss*dist*dist)/(4.0*Tr*t);
   td = 1.0/u;
   par3(1)=0.0;
   W = boulton_well_function_vector_cpp(td, phi, sigma, par3);
@@ -772,7 +772,7 @@ NumericVector papadopulos_solution_space(const double& Q, const double& x0,
   Ss = hydrpar[1];
   rw = hydrpar[2];
   rc = hydrpar[3];
-  u = (Ss*dist)/(4.0*Tr*t);
+  u = (Ss*dist*dist)/(4.0*Tr*t);
   cd(1) = std::pow(rw, 2)*Ss/std::pow(rc, 2);
   rho = dist/rw;
   td = 1.0/u;
@@ -798,7 +798,7 @@ NumericVector hantush_jacob_solution_space(const double& Q, const double& x0,
   Ss = hydrpar[1];
   K = hydrpar[2];
   b = hydrpar[3];
-  u = (Ss*dist)/(4.0*Tr*t);
+  u = (Ss*dist*dist)/(4.0*Tr*t);
   beta = std::sqrt(K/(b*Tr))*dist;
   td = 1.0/u;
   W=hantush_jacob_well_function_vector_cpp(td, beta, 0.0, 0.0);
@@ -826,9 +826,37 @@ NumericVector general_radial_flow_solution_space(const double& Q,
   Ss = hydrpar[1];
   n = hydrpar[2];
   rd = hydrpar[3];
-  u = (Ss*dist)/(4.0*Tr*t);
+  u = (Ss*dist*dist)/(4.0*Tr*t);
   td = 1.0/u;
   W = general_radial_flow_well_function_cpp(td, n, rd, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*W;
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector agarwal_skin_solution_space(const double& Q, 
+                                          const double& x0, 
+                                          const double& y0, 
+                                          const double& t, 
+                                          NumericVector hydrpar, 
+                                          const int& nx, 
+                                          const int& ny,
+                                          const double& xmin,
+                                          const double& xmax,
+                                          const double& ymin, 
+                                          const double& ymax){
+  NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
+  dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
+  double Tr, Ss, cd, rd, sigma;
+  NumericVector W(nx*ny),rho(nx*ny),beta(nx*ny);
+  Tr = hydrpar[0];
+  Ss = hydrpar[1];
+  cd = hydrpar[2];
+  rd = hydrpar[3];
+  sigma = hydrpar[4];
+  u = (Ss*dist*dist)/(4.0*Tr*t);
+  td = 1.0/u;
+  W = agarwal_skin_well_function_cpp(td, cd, rd, sigma);
   drawdown = (Q/(4.0*M_PI*Tr))*W;
   return(drawdown);
 }
