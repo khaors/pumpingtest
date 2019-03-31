@@ -885,6 +885,8 @@ XPtr<spacefuncPtr> putSpaceFunPtrInXPtr(std::string fstr) {
     return(XPtr<spacefuncPtr>(new spacefuncPtr(&papadopulos_solution_space)));
   else if(fstr == "general_radial_flow" || fstr == "grf")
     return(XPtr<spacefuncPtr>(new spacefuncPtr(&general_radial_flow_solution_space)));
+  else if(fstr == "agarwal_skin")
+    return(XPtr<spacefuncPtr>(new spacefuncPtr(&agarwal_skin_solution_space)));
   else
     return XPtr<spacefuncPtr>(R_NilValue); // runtime error as NULL no XPtr
 }
