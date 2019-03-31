@@ -1002,16 +1002,124 @@ NumericVector no_flow_boulton_well_function_cpp(const double& Q,
   int ntimes = t.length();
   NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
   NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double phi1,phi2;
   double Tr = hydrpar[0];
   double Ss = hydrpar[1];
+  double alpha1 = hydrpar[2];
+  double sigma = hydrpar[3];
   u1 = (r1*r1*Ss)/(4.0*Tr*t);
   u2 = (r2*r2*Ss)/(4.0*Tr*t);
   t1 = 1.0/u1;
   t2 = 1.0/u2;
-  W1 = boulton_well_function_cpp(t1, 0.0, 0.0, 0.0);
-  W2 = boulton_well_function_cpp(t2, 0.0, 0.0, 0.0);
+  phi1=alpha1*r1*r1*Ss/Tr;
+  phi2=alpha1*r2*r2*Ss/Tr;
+  W1 = boulton_well_function_cpp(t1, phi1, sigma, 0.0);
+  W2 = boulton_well_function_cpp(t2, phi2, sigma, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*(W1+W2);
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector constant_head_hantush_well_function_cpp(const double& Q, 
+                                                      const double& r1, 
+                                                      const double& r2, 
+                                                      NumericVector t, 
+                                                      NumericVector hydrpar){
+  int ntimes = t.length();
+  NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
+  NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double phi1,phi2;
+  double Tr = hydrpar[0];
+  double Ss = hydrpar[1];
+  double Kh = hydrpar[2];
+  double Ss1 = hydrpar[3];
+  double beta1 = 0.25*r1*sqrt((Kh*Ss1)/(Tr*Ss));
+  double beta2 = 0.25*r2*sqrt((Kh*Ss1)/(Tr*Ss));
+  u1 = (r1*r1*Ss)/(4.0*Tr*t);
+  u2 = (r2*r2*Ss)/(4.0*Tr*t);
+  t1 = 1.0/u1;
+  t2 = 1.0/u2;
+  W1 = hantush_jacob_well_function_cpp(t1, beta1, 0.0, 0.0);
+  W2 = hantush_jacob_well_function_cpp(t2, beta2, 0.0, 0.0);
   drawdown = (Q/(4.0*M_PI*Tr))*(W1-W2);
   return(drawdown);
 }
 //
-
+// [[Rcpp::export]]
+NumericVector no_flow_hantush_well_function_cpp(const double& Q, 
+                                                const double& r1, 
+                                                const double& r2,
+                                                NumericVector t,
+                                                NumericVector hydrpar){
+  int ntimes = t.length();
+  NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
+  NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double Tr = hydrpar[0];
+  double Ss = hydrpar[1];
+  double Kh = hydrpar[2];
+  double Ss1 = hydrpar[3];
+  double beta1 = 0.25*r1*sqrt((Kh*Ss1)/(Tr*Ss));
+  double beta2 = 0.25*r2*sqrt((Kh*Ss1)/(Tr*Ss));
+  u1 = (r1*r1*Ss)/(4.0*Tr*t);
+  u2 = (r2*r2*Ss)/(4.0*Tr*t);
+  t1 = 1.0/u1;
+  t2 = 1.0/u2;
+  W1 = hantush_jacob_well_function_cpp(t1, beta1, 0.0, 0.0);
+  W2 = hantush_jacob_well_function_cpp(t2, beta2, 0.0, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*(W1+W2);
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector constant_head_papadopulos_well_function_cpp(const double& Q, 
+                                                          const double& r1, 
+                                                          const double& r2, 
+                                                          NumericVector t, 
+                                                          NumericVector hydrpar){
+  int ntimes = t.length();
+  NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
+  NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double phi1,phi2;
+  double Tr = hydrpar[0];
+  double Ss = hydrpar[1];
+  double rw = hydrpar[2];
+  double rc = hydrpar[3];
+  double cd = std::pow(rw, 2)*Ss/std::pow(rc, 2);
+  double rho1 = r1/rw;
+  double rho2 = r2/rw;
+  u1 = (r1*r1*Ss)/(4.0*Tr*t);
+  u2 = (r2*r2*Ss)/(4.0*Tr*t);
+  t1 = 1.0/u1;
+  t2 = 1.0/u2;
+  W1 = papadopulos_cooper_well_function_cpp(t1, cd, rho1, 0.0);
+  W2 = papadopulos_cooper_well_function_cpp(t2, cd, rho2, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*(W1-W2);
+  return(drawdown);
+}
+//
+// [[Rcpp::export]]
+NumericVector no_flow_papadopulos_well_function_cpp(const double& Q, 
+                                                    const double& r1, 
+                                                    const double& r2,
+                                                    NumericVector t,
+                                                    NumericVector hydrpar){
+  int ntimes = t.length();
+  NumericVector u1(ntimes),u2(ntimes), W1(ntimes), W2(ntimes);
+  NumericVector t1(ntimes), t2(ntimes), drawdown(ntimes);
+  double phi1,phi2;
+  double Tr = hydrpar[0];
+  double Ss = hydrpar[1];
+  double rw = hydrpar[2];
+  double rc = hydrpar[3];
+  double cd = std::pow(rw, 2)*Ss/std::pow(rc, 2);
+  double rho1 = r1/rw;
+  double rho2 = r2/rw;
+  u1 = (r1*r1*Ss)/(4.0*Tr*t);
+  u2 = (r2*r2*Ss)/(4.0*Tr*t);
+  t1 = 1.0/u1;
+  t2 = 1.0/u2;
+  W1 = papadopulos_cooper_well_function_cpp(t1, cd, rho1, 0.0);
+  W2 = papadopulos_cooper_well_function_cpp(t2, cd, rho2, 0.0);
+  drawdown = (Q/(4.0*M_PI*Tr))*(W1+W2);
+  return(drawdown);
+}

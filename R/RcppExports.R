@@ -165,3 +165,19 @@ no_flow_boulton_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
     .Call('_pumpingtest_no_flow_boulton_well_function_cpp', PACKAGE = 'pumpingtest', Q, r1, r2, t, hydrpar)
 }
 
+constant_head_hantush_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
+    .Call('_pumpingtest_constant_head_hantush_well_function_cpp', PACKAGE = 'pumpingtest', Q, r1, r2, t, hydrpar)
+}
+
+no_flow_hantush_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
+    .Call('_pumpingtest_no_flow_hantush_well_function_cpp', PACKAGE = 'pumpingtest', Q, r1, r2, t, hydrpar)
+}
+
+constant_head_papadopulos_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
+    .Call('_pumpingtest_constant_head_papadopulos_well_function_cpp', PACKAGE = 'pumpingtest', Q, r1, r2, t, hydrpar)
+}
+
+no_flow_papadopulos_well_function_cpp <- function(Q, r1, r2, t, hydrpar) {
+    .Call('_pumpingtest_no_flow_papadopulos_well_function_cpp', PACKAGE = 'pumpingtest', Q, r1, r2, t, hydrpar)
+}
+
