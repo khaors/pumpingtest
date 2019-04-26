@@ -27,12 +27,13 @@ NULL
 #' @examples
 #' data(papadopulos_cooper)
 agarwal_skin_well_function <- function(td, par){
-  coeffs <- par$coeffs
+  #coeffs <- par$coeffs
   arg1 <- par$cd
   arg2 <- par$rd
   arg3 <- par$sigma
-  sd <- stehfest_inversion(td, coeffs, agarwal_skin_WF_LT, arg1 = arg1,
-                           arg2 = arg2, arg3 = arg3)
+  #sd <- stehfest_inversion(td, coeffs, agarwal_skin_WF_LT, arg1 = arg1,
+  #                         arg2 = arg2, arg3 = arg3)
+  sd <- agarwal_skin_well_function_cpp(td, arg1, arg2, arg3)
   return(sd)
 }
 #' @title
