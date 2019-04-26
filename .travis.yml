@@ -8,6 +8,6 @@ r_build_args: "--no-manual --no-resave-data"
 r_check_args: "--no-build-vignettes --no-manual --timings"
 
 before_install:
-  - sudo apt-get install libgsl0-dev libgsl2
+  - sudo apt-get install libgsl0-dbg libgsl0-dev 
   - sudo add-apt-repository -y ppa:texlive-backports/ppa
   - Rscript -e 'update.packages(ask = FALSE)'
