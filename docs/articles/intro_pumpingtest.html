@@ -80,7 +80,7 @@
       <h1>pumpingtest: Analysis and Evaluation of Pumping Test Data in R</h1>
                         <h4 class="author">Oscar Garcia-Cabrejo</h4>
             
-            <h4 class="date">2019-03-31</h4>
+            <h4 class="date">2019-04-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khaors/pumpingtest/blob/master/vignettes/intro_pumpingtest.Rmd"><code>vignettes/intro_pumpingtest.Rmd</code></a></small>
       <div class="hidden name"><code>intro_pumpingtest.Rmd</code></div>
@@ -320,20 +320,20 @@ p.central &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 <p>Let’s take a look at the values of the nuance parameters accessing the parameters variable:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.fit<span class="op">$</span>parameters</code></pre></div>
 <pre><code>## $a
-## [1] 1.785655
+## [1] 1.78566
 ## 
 ## $t0
-## [1] 413.0328</code></pre>
-<p>This shows that the value of <span class="math inline">\(a=\)</span> 1.7856545 and <span class="math inline">\(t_{0}=\)</span> 413.0328271. From these values the hydraulic parameters specific for this model are internally calculated by the <em>fit</em> function using the <em>theis_calculate_parameters</em> function and the results are:</p>
+## [1] 413.0369</code></pre>
+<p>This shows that the value of <span class="math inline">\(a=\)</span> 1.7856604 and <span class="math inline">\(t_{0}=\)</span> 413.0369046. From these values the hydraulic parameters specific for this model are internally calculated by the <em>fit</em> function using the <em>theis_calculate_parameters</em> function and the results are:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.fit<span class="op">$</span>hydraulic_parameters</code></pre></div>
 <pre><code>## $Tr
-## [1] 0.001425109
+## [1] 0.001425104
 ## 
 ## $Ss
-## [1] 2.115102e-05
+## [1] 2.115116e-05
 ## 
 ## $radius_influence
-## [1] 2843.472</code></pre>
+## [1] 2843.458</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tr &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>Tr
 Ss &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>Ss
 Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>radius_influence</code></pre></div>
@@ -415,18 +415,18 @@ Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_par
 <tbody>
 <tr class="odd">
 <td>Tr</td>
-<td align="right">0.0014028</td>
-<td align="right">0.0014505</td>
+<td align="right">0.0013984</td>
+<td align="right">1.44570e-03</td>
 </tr>
 <tr class="even">
 <td>Ss</td>
 <td align="right">0.0000204</td>
-<td align="right">0.0000216</td>
+<td align="right">2.18000e-05</td>
 </tr>
 <tr class="odd">
 <td>radius_influence</td>
-<td align="right">2789.8145722</td>
-<td align="right">2917.3119298</td>
+<td align="right">2779.4235685</td>
+<td align="right">2.91425e+03</td>
 </tr>
 </tbody>
 </table>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>hantush_jacob_solutionb_initial — hantush_jacob_solution_initial • pumpingtest</title>
+<title>analytical_gui — analytical_gui • pumpingtest</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="hantush_jacob_solutionb_initial — hantush_jacob_solution_initial" />
+<meta property="og:title" content="analytical_gui — analytical_gui" />
 
-<meta property="og:description" content="Function to calculate the initial parameters of the Hantush-Jacob model" />
+<meta property="og:description" content="analytical GUI" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,83 +111,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>hantush_jacob_solutionb_initial</h1>
-    <small class="dont-index">Source: <a href='https://github.com/khaors/pumpingtest/blob/master/R/hantush_jacob_utilities.R'><code>R/hantush_jacob_utilities.R</code></a></small>
-    <div class="hidden name"><code>hantush_jacob_solution_initial.Rd</code></div>
+    <h1>analytical_gui</h1>
+    <small class="dont-index">Source: <a href='https://github.com/khaors/pumpingtest/blob/master/R/analytical_gui.R'><code>R/analytical_gui.R</code></a></small>
+    <div class="hidden name"><code>analytical_gui.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function to calculate the initial parameters of the Hantush-Jacob model</p>
+    <p>analytical GUI</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>hantush_jacob_solution_initial</span>(<span class='no'>ptest</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>ptest</th>
-      <td><p>A pumping_test object</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='fu'>analytical_gui</span>()</pre>
+        
 
-    <p>A list with</p><ul>
-<li><p>a: Slope of the straight line fitted to the drawdown data using the
-Cooper-Jacob approach</p></li>
-<li><p>t0: Intercept of the straight line fitted to the drawdown data using the
-Cooper-Jacob approach</p></li>
-<li><p>lambda: Leakage factor defined as
-$$\lambda = \sqrt{\frac{b^{'}T}{k_{h}^{'}}} $$</p></li>
-</ul><p>where \(b^{'}\) and \(k_{h}^{'}\) are the thickness and the vertical hydraulic
-conductivity of the aquitard, and \(T\) is the transmissivity of the underlying
-aquifer.</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Hantush, M. S. Flow to wells in aquifers separated by a semipervious layer. Journal
-of Geophysical Research, 1967, 72, 1709.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other hantush_jacob functions: <code><a href='hantush_jacob_WF_LT_dlogt.html'>hantush_jacob_WF_LT_dlogt</a></code>,
-  <code><a href='hantush_jacob_WF_LT.html'>hantush_jacob_WF_LT</a></code>,
-  <code><a href='hantush_jacob_calculate_parameters.html'>hantush_jacob_calculate_parameters</a></code>,
-  <code><a href='hantush_jacob_solution_dlogt.html'>hantush_jacob_solution_dlogt</a></code>,
-  <code><a href='hantush_jacob_solution.html'>hantush_jacob_solution</a></code>,
-  <code><a href='hantush_jacob_well_function.html'>hantush_jacob_well_function</a></code></p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>hantush_jacob</span>)
-<span class='no'>ptest</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pumping_test.html'>pumping_test</a></span>(<span class='st'>'Well1'</span>, <span class='kw'>Q</span> <span class='kw'>=</span> <span class='fl'>6.309e-3</span>, <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>3.048</span>, <span class='kw'>t</span><span class='kw'>=</span><span class='no'>hantush_jacob</span>$<span class='no'>t</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='no'>hantush_jacob</span>$<span class='no'>s</span>)
-<span class='no'>sol0</span> <span class='kw'>&lt;-</span> <span class='fu'>hantush_jacob_solution_initial</span>(<span class='no'>ptest</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>sol0</span>)</div><div class='output co'>#&gt; $a
-#&gt; [1] 7.82978
-#&gt; 
-#&gt; $t0
-#&gt; [1] 2.703075
-#&gt; 
-#&gt; $lambda
-#&gt; [1] 49.91162
-#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
     <h2>Author</h2>
     <p>Oscar Garcia-Cabrejo <a href='mailto:khaors@gmail.com'>khaors@gmail.com</a></p>
