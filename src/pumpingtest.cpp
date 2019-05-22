@@ -739,17 +739,18 @@ NumericVector boulton_solution_space(const double& Q, const double& x0,
                                      const double& ymax){
   NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
   dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
+  //std::cout << dist << std::endl;
   double Tr, Ss, Sy, alpha1;
   NumericVector W(nx*ny), phi(nx*ny), sigma(1), par3(1);
   Tr = hydrpar[0];
   Ss = hydrpar[1];
   Sy = hydrpar[2];
   alpha1 = hydrpar[3];
-  sigma(1) = Ss/Sy;
+  sigma[0] = Ss/Sy;
   phi = (alpha1*dist*dist*Ss)/(Tr);
   u = (Ss*dist*dist)/(4.0*Tr*t);
   td = 1.0/u;
-  par3(1)=0.0;
+  par3[0]=0.0;
   W = boulton_well_function_vector_cpp(td, phi, sigma, par3);
   drawdown = (Q/(4.0*M_PI*Tr))*W;
   return(drawdown);
