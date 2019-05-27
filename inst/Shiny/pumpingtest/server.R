@@ -697,6 +697,34 @@ shinyServer(function(input, output, session) {
      if(input$parest_opt1 == "nls" ) obj.fn <- "rss"
      #print(opt.method)
      #print(c(opt.method, input$parest_objfn1, obj.fn))
+     # Check additional parameters
+     add.par <- current.ptest$additional_parameters
+     if(input$parest_model1 == "papadopulos_cooper"){
+       check1 <- "rc" %in% names(add.par)
+       check2 <- "rw" %in% names(add.par)
+       if(!check1 || !check2){
+         shinyalert("Oops!", "Papadopulos-Cooper model requires rc and/or rw parameters.", 
+                    type = "error")
+         return(NULL)
+       }
+     }
+     else if(input$parest_model1 == "general_radial_flow"){
+       check1 <- "rc" %in% names(add.par)
+       check2 <- "rw" %in% names(add.par)
+       if(!check1 || !check2){
+         shinyalert("Oops!", "GRF model requires rc and/or rw parameters.", 
+                    type = "error")
+         return(NULL)
+       }
+     }
+     else if(input$parest_model1 == "hantush_jacob"){
+       check1 <- "B" %in% names(add.par)
+       if(!check1){
+         shinyalert("Oops!", "Hantush-Jacob model requires the aquitard Thickness.", 
+                    type = "error")
+         return(NULL)
+       }
+     }
      current.fit <- fit.optimization(current.ptest, input$parest_model1,
                                      obj.fn = obj.fn,
                                      opt.method = opt.method, seed = 54321)
