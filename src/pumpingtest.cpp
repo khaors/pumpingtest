@@ -370,13 +370,13 @@ NumericVector stehfest_inversion_vector_cpp(NumericVector t,
     ft[it-1] = 0.0;
     a = log(2.0)/t[it-1];
     if(arg1.length() > 1){
-      arg1v=arg1[it];
+      arg1v=arg1[it-1];
     }
     if(arg2.length() > 1){
-      arg2v=arg2[it];
+      arg2v=arg2[it-1];
     }
     if(arg3.length() > 1){
-      arg3v=arg3[it];
+      arg3v=arg3[it-1];
     }
     for(int ic = 1; ic <= nc; ic++){
       p1(0) = ic*a;
