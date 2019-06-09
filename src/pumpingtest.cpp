@@ -4,7 +4,10 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double factorial_cpp(const int& n){
   double fac=1.0;
-  if(n == 1){
+  if(n < 0){
+    stop("factorial: input is less than 0");
+  }
+  else if(n == 1){
     return(n);
   }
   else{
@@ -17,10 +20,13 @@ double factorial_cpp(const int& n){
 
 // [[Rcpp::export]]
 NumericVector stehfest_coefficients_cpp(const int& n){
+  if(n < 0){
+    stop("stehfest_coeffs: Number of coeffs less than 0");
+  }
   NumericVector coeffs(n);
   int nhlf,k1,k2;
   double num, den;
-  nhlf = n/2;
+  nhlf = n/2;   
   for(int i = 1; i <= n;i++){
     coeffs[i-1] = 0.0;
     k1 = std::floor((i+1)/2);
@@ -62,6 +68,12 @@ NumericVector papadopulos_cooper_WF_LT_cpp(NumericVector p,
                                            const double& rho, 
                                            const double& par=0.0){
   int n=p.size();
+  if(alpha < 0.0){
+    stop("Papadopulos_cooper_WF_LT: alpha is less than 0");
+  }
+  if(rho < 0.0){
+    stop("Papadopulos_cooper_WF_LT: rho is less than 0");
+  }
   NumericVector L(n);
   double num,den1,den2,currentp,var1,var2,den;
   //
@@ -83,6 +95,12 @@ NumericVector boulton_WF_LT_cpp(NumericVector p,
                                 const double& par2, 
                                 const double& par3=0.0){
   int n=p.size();
+  if(par1 < 0.0){
+    stop("boulton_WF_LT: sigma is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("boulton_WF_LT: phi is less than 0");
+  }
   NumericVector L(n);
   double sigma = fabs(par1);
   double phi = fabs(par2);
@@ -102,6 +120,9 @@ NumericVector hantush_jacob_WF_LT_cpp(NumericVector p,
                                       const double& par3 = 0.0){
   int n=p.size();
   NumericVector L(n);
+  if(par1 < 0.0){
+    stop("hantush_jacob_WF_LT: beta is less than 0");
+  }
   double pm, sp;
   double beta = par1;
   for(int i =0;i<n;i++){
@@ -117,7 +138,7 @@ NumericVector agarwal_recovery_WF_LT_cpp(NumericVector p,
                                          const double& par1 = 0.0,
                                          const double& par2 = 0.0, 
                                          const double& par3 = 0.0){
-  NumericVector W= theis_WF_LT_cpp(p, par1, par2, par3);
+  NumericVector W = theis_WF_LT_cpp(p, par1, par2, par3);
   return(W);
 }
 
@@ -127,6 +148,15 @@ NumericVector agarwal_skin_WF_LT_cpp(NumericVector p,
                                      const double& par2,
                                      const double& par3){
   double cd, rd, sigma;
+  if(par1 < 0.0){
+    stop("agarwal_skin_WF_LT: cd is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("agarwal_skin_WF_LT: rd is less than 0");
+  }
+  if(par3 < 0.0){
+    stop("agarwal_skin_WF_LT: sigma is less than 0");
+  }
   cd = par1;
   rd = par2;
   sigma = par3;
@@ -148,6 +178,12 @@ NumericVector general_radial_flow_WF_LT_cpp(NumericVector p,
                                             const double& par2 = 0.0, 
                                             const double& par3 = 0.0){
   double n, rd, sp;
+  if(par1 < 0.0){
+    stop("general_radial_flow_WF_LT: n is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("general_radial_flow_WF_LT: rd is less than 0");
+  }
   n = par1;
   rd = par2;
   int np;
@@ -173,6 +209,9 @@ NumericVector cooper_WF_LT_cpp(NumericVector p,
                                const double& par2 = 0.0, 
                                const double& par3 = 0.0){
   double cd;//,rd;
+  if(par1 < 0.0){
+    stop("cooper_WF_LT: cd is less than 0");
+  }
   cd = par1;
   //rd = par2;
   int n = p.size();
@@ -195,6 +234,9 @@ NumericVector neuzil_WF_LT_cpp(NumericVector p,
                                const double& par2 = 0.0, 
                                const double& par3 = 0.0){
   double cd;
+  if(par1 < 0.0){
+    stop("neuzil_WF_LT: cd is less than 0");
+  }
   cd = par1;
   int n = p.size();
   NumericVector L(n);
@@ -219,6 +261,12 @@ NumericVector warren_root_WF_LT_cpp(NumericVector p,
                                     const double& par2 = 0.0, 
                                     const double& par3 = 0.0){
   double sigma, lambda;
+  if(par1 < 0.0){
+    stop("warren_root_WF_LT: sigma is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("warren_root_WF_LT: lambda is less than 0");
+  }
   sigma = par1;
   lambda = par2;
   int n = p.size();
@@ -471,6 +519,12 @@ NumericVector boulton_well_function_cpp(NumericVector td,
                                         const double& par1, 
                                         const double& par2, 
                                         const double& par3 = 0.0){
+  if(par1 < 0.0){
+    stop("boulton_well_function: sigma is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("boulton_well_function: phi is less than 0");
+  }
   int n=td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -494,6 +548,9 @@ NumericVector hantush_jacob_well_function_cpp(NumericVector td,
                                               const double& par1, 
                                               const double& par2, 
                                               const double& par3){
+  if(par1 < 0.0){
+    stop("hantush_jacob_well_function: beta is less than 0");
+  }
   int n=td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -518,6 +575,12 @@ NumericVector general_radial_flow_well_function_cpp(NumericVector td,
                                                     const double& par1, 
                                                     const double& par2, 
                                                     const double& par3){
+  if(par1 < 0.0){
+    stop("general_radial_flow_well_function: n is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("general_radial_flow_well_function: rd is less than 0");
+  }
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -529,6 +592,12 @@ NumericVector papadopulos_cooper_well_function_cpp(NumericVector td,
                                                    const double& par1, 
                                                    const double& par2, 
                                                    const double& par3){
+  if(par1 < 0.0){
+    stop("papadopulos_cooper_well_function: cd is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("papadopulos_cooper_well_function: rho is less than 0");
+  }
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -555,6 +624,9 @@ NumericVector cooper_well_function_cpp(NumericVector td,
                                        const double& par1, 
                                        const double& par2, 
                                        const double& par3){
+  if(par1 < 0.0){
+    stop("cooper_well_function: cd is less than 0");
+  }
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -566,6 +638,9 @@ NumericVector neuzil_well_function_cpp(NumericVector td,
                                        const double& par1, 
                                        const double& par2, 
                                        const double& par3){
+  if(par1 < 0.0){
+    stop("neuzilr_well_function: cd is less than 0");
+  }
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -577,6 +652,15 @@ NumericVector agarwal_skin_well_function_cpp(NumericVector td,
                                              const double& par1, 
                                              const double& par2, 
                                              const double& par3){
+  if(par1 < 0.0){
+    stop("agarwal_skin_well_function: cd is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("agarwal_skin_well_function: rd is less than 0");
+  }
+  if(par3 < 0.0){
+    stop("agarwal_skin_well_function: sigma is less than 0");
+  }
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -589,6 +673,12 @@ NumericVector warren_root_well_function_cpp(NumericVector td,
                                             const double& par1, 
                                             const double& par2, 
                                             const double& par3){
+  if(par1 < 0.0){
+    stop("warren_root_well_function: sigma is less than 0");
+  }
+  if(par2 < 0.0){
+    stop("warren_root_well_function: lambda is less than 0");
+  }
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -666,6 +756,12 @@ NumericMatrix calculate_aquifer_coordinates(const int& nx,
                                             const double& xmax, 
                                             const double& ymin, 
                                             const double& ymax){
+  if(nx <= 0){
+    stop("Calculate_aqufer_coordinates: number of nodes in x is less than 0");
+  }
+  if(ny <= 0){
+    stop("Calculate_aqufer_coordinates: number of nodes in x is less than 0");
+  }
   NumericMatrix coords(nx*ny, 2);
   double dx,dy,xcoord,ycoord;
   dx = (xmax-xmin)/(nx);
@@ -689,6 +785,12 @@ NumericVector calculate_distance_well(const double& x0, const double& y0,
                                       const double& xmax, 
                                       const double& ymin, 
                                       const double& ymax){
+  if(nx <= 0){
+    stop("calculate_distance_well: number of nodes in x is less than 0");
+  }
+  if(ny <= 0){
+    stop("calculate_distance_well: number of nodes in x is less than 0");
+  }
   NumericVector dist(nx*ny);
   int pos = 0;
   double dx,dy;
@@ -717,11 +819,23 @@ NumericVector theis_solution_space(const double& Q, const double& x0,
                                    const double& xmax, 
                                    const double& ymin, 
                                    const double& ymax){
+  if(nx <= 0){
+    stop("theis_solution_space: number of nodes in x is less than 0");
+  }
+  if(ny <= 0){
+    stop("theis_solution_space: number of nodes in x is less than 0");
+  }
   NumericVector dist(nx*ny), u(nx*ny), td(nx*ny), drawdown(nx*ny);
   dist = calculate_distance_well(x0,y0,nx,ny,xmin,xmax,ymin,ymax);
   double Tr, Ss;
   Tr = hydrpar[0];
+  if(Tr <= 0.0){
+    stop("theis_solution_space: Invalid Transmissivity");
+  }
   Ss = hydrpar[1];
+  if(Ss <= 0.0){
+    stop("theis_solution_space: Invalid Storage Coefficient");
+  }
   u = (Ss*dist*dist)/(4.0*Tr*t);
   td = 1.0/u;
   drawdown=(Q/(4.0*M_PI*Tr))*theis_well_function_cpp(td, 0.0, 0.0, 0.0);
@@ -743,9 +857,21 @@ NumericVector boulton_solution_space(const double& Q, const double& x0,
   double Tr, Ss, Sy, alpha1;
   NumericVector W(nx*ny), phi(nx*ny), sigma(1), par3(1);
   Tr = hydrpar[0];
+  if(Tr <= 0.0){
+    stop("boulton_solution_space: Invalid Transmissivity");
+  }
   Ss = hydrpar[1];
+  if(Ss <= 0.0){
+    stop("boulton_solution_space: Invalid Storage Coefficient");
+  }
   Sy = hydrpar[2];
+  if(Sy <= 0.0){
+    stop("boulton_solution_space: Invalid Specific storage");
+  }
   alpha1 = hydrpar[3];
+  if(alpha1 <= 0.0){
+    stop("boulton_solution_space: Invalid delay parameter");
+  }
   sigma[0] = Ss/Sy;
   phi = (alpha1*dist*dist*Ss)/(Tr);
   u = (Ss*dist*dist)/(4.0*Tr*t);
@@ -770,9 +896,21 @@ NumericVector papadopulos_solution_space(const double& Q, const double& x0,
   double Tr, Ss, rw, rc;
   NumericVector W(nx*ny),rho(nx*ny),cd(1);
   Tr = hydrpar[0];
+  if(Tr <= 0.0){
+    stop("papadopulos_solution_space: Invalid Transmissivity");
+  }
   Ss = hydrpar[1];
+  if(Ss <= 0.0){
+    stop("papadopulos_solution_space: Invalid Storage Coefficient");
+  }
   rw = hydrpar[2];
+  if(rw <= 0.0){
+    stop("papadopulos_solution_space: Invalid well radius");
+  }
   rc = hydrpar[3];
+  if(rc <= 0.0){
+    stop("papadopulos_solution_space: Invalid well casing");
+  }
   u = (Ss*dist*dist)/(4.0*Tr*t);
   cd(1) = std::pow(rw, 2)*Ss/std::pow(rc, 2);
   rho = dist/rw;
@@ -796,9 +934,21 @@ NumericVector hantush_jacob_solution_space(const double& Q, const double& x0,
   double Tr, Ss, K, b;
   NumericVector W(nx*ny),rho(nx*ny),beta(nx*ny);
   Tr = hydrpar[0];
+  if(Tr <= 0.0){
+    stop("hantush_jacob_solution_space: Invalid Transmissivity");
+  }
   Ss = hydrpar[1];
+  if(Ss <= 0.0){
+    stop("hantush_jacob_solution_space: Invalid Storage Coefficient");
+  }
   K = hydrpar[2];
+  if(K <= 0.0){
+    stop("hantush_jacob_solution_space: Invalid Confining bed hydraulic conductivity");
+  }
   b = hydrpar[3];
+  if(Ss <= 0.0){
+    stop("hantush_jacob_solution_space: Invalid aquifer thickness");
+  }
   u = (Ss*dist*dist)/(4.0*Tr*t);
   beta = std::sqrt(K/(b*Tr))*dist;
   td = 1.0/u;
@@ -824,9 +974,21 @@ NumericVector general_radial_flow_solution_space(const double& Q,
   double Tr, Ss, n, rd;
   NumericVector W(nx*ny),rho(nx*ny),beta(nx*ny);
   Tr = hydrpar[0];
+  if(Tr <= 0.0){
+    stop("general_radial_flow_solution_space: Invalid Transmissivity");
+  }
   Ss = hydrpar[1];
+  if(Ss <= 0.0){
+    stop("general_radial_flow_solution_space: Invalid Storage Coefficient");
+  }
   n = hydrpar[2];
+  if(n <= 0.0){
+    stop("general_radial_flow_solution_space: Invalid Flow Dimension");
+  }
   rd = hydrpar[3];
+  if(rd <= 0.0){
+    stop("general_radial_flow_solution_space: Invalid Dimensionless Radius");
+  }
   u = (Ss*dist*dist)/(4.0*Tr*t);
   td = 1.0/u;
   W = general_radial_flow_well_function_cpp(td, n, rd, 0.0);
@@ -851,10 +1013,25 @@ NumericVector agarwal_skin_solution_space(const double& Q,
   double Tr, Ss, cd, rd, sigma;
   NumericVector W(nx*ny),rho(nx*ny),beta(nx*ny);
   Tr = hydrpar[0];
+  if(Tr <= 0.0){
+    stop("agarwal_skin_solution_space: Invalid Transmissivity");
+  }
   Ss = hydrpar[1];
+  if(Ss <= 0.0){
+    stop("agarwal_skin_solution_space: Invalid Storage Coefficient");
+  }
   cd = hydrpar[2];
+  if(cd <= 0.0){
+    stop("agarwal_skin_solution_space: Invalid wellbore Storage");
+  }
   rd = hydrpar[3];
+  if(rd <= 0.0){
+    stop("agarwal_skin_solution_space: Invalid dimensionless radius");
+  }
   sigma = hydrpar[4];
+  if(sigma <= 0.0){
+    stop("agarwal_skin_solution_space: Invalid sigma");
+  }
   u = (Ss*dist*dist)/(4.0*Tr*t);
   td = 1.0/u;
   W = agarwal_skin_well_function_cpp(td, cd, rd, sigma);
@@ -924,9 +1101,20 @@ NumericMatrix infinite_aquifer_calculate_drawdown_cpp(std::string model,
                                                       const double& xmax, 
                                                       const double& ymin, 
                                                       const double& ymax){
-  
+  if(nx <= 0){
+    stop("infinite_aquifer_calculate_drawdown: nx is less than 0");
+  }
+  if(ny <= 0){
+    stop("infinite_aquifer_calculate_drawdown: ny is less than 0");
+  }
   int ntimes = t.length();
+  if(ntimes < 1){
+    stop("infinite_aquifer_calculate_drawdown: at least 1 time is required");
+  }
   int nwells = Q.length();
+  if(nwells < 1){
+    stop("infinite_aquifer_calculate_drawdown: at least 1 well is required");
+  }
   NumericMatrix drawdown(nx*ny,ntimes);
   double current_x0,current_y0,currentQ,current_time;
   //
