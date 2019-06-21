@@ -382,7 +382,7 @@ log_derivative_smoothspline <- function(t, s){
   t1 <- log10(t)
   t1a <- logseq(from = 1.01*min(t1), to = 0.99*max(t1), n = length(t1))
   res1 <- predict(res, log10(t1a), deriv = 1)
-  results <- list(x = 10^(res1$x), y = abs(res1$y)/2, res = res)
+  results <- list(x = 10^(res1$x), y = abs(res1$y)/log(10), res = res)
   return(results)
 }
 #' @title
