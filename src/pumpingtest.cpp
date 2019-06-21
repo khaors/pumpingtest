@@ -148,7 +148,7 @@ NumericVector agarwal_skin_WF_LT_cpp(NumericVector p,
                                      const double& par2,
                                      const double& par3){
   double cd, rd, sigma;
-  if(par1 < 0.0){
+  /*if(par1 < 0.0){
     stop("agarwal_skin_WF_LT: cd is less than 0");
   }
   if(par2 < 0.0){
@@ -156,7 +156,7 @@ NumericVector agarwal_skin_WF_LT_cpp(NumericVector p,
   }
   if(par3 < 0.0){
     stop("agarwal_skin_WF_LT: sigma is less than 0");
-  }
+  }*/
   cd = par1;
   rd = par2;
   sigma = par3;
@@ -209,9 +209,9 @@ NumericVector cooper_WF_LT_cpp(NumericVector p,
                                const double& par2 = 0.0, 
                                const double& par3 = 0.0){
   double cd;//,rd;
-  if(par1 < 0.0){
+  /*if(par1 < 0.0){
     stop("cooper_WF_LT: cd is less than 0");
-  }
+  }*/
   cd = par1;
   //rd = par2;
   int n = p.size();
@@ -624,9 +624,9 @@ NumericVector cooper_well_function_cpp(NumericVector td,
                                        const double& par1, 
                                        const double& par2, 
                                        const double& par3){
-  if(par1 < 0.0){
+  /*if(par1 < 0.0){
     stop("cooper_well_function: cd is less than 0");
-  }
+  }*/
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
@@ -652,7 +652,7 @@ NumericVector agarwal_skin_well_function_cpp(NumericVector td,
                                              const double& par1, 
                                              const double& par2, 
                                              const double& par3){
-  if(par1 < 0.0){
+  /*if(par1 < 0.0){
     stop("agarwal_skin_well_function: cd is less than 0");
   }
   if(par2 < 0.0){
@@ -660,7 +660,7 @@ NumericVector agarwal_skin_well_function_cpp(NumericVector td,
   }
   if(par3 < 0.0){
     stop("agarwal_skin_well_function: sigma is less than 0");
-  }
+  }*/
   int n = td.size();
   NumericVector W(n);
   NumericVector coeffs = stehfest_coefficients_cpp(8);
