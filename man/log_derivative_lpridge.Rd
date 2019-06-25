@@ -4,12 +4,14 @@
 \alias{log_derivative_lpridge}
 \title{log_derivative_lpridge}
 \usage{
-log_derivative_lpridge(t, s)
+log_derivative_lpridge(t, s, return.pos = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
 
 \item{s}{Numeric vector with the drawdown}
+
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
 }
 \value{
 A list with

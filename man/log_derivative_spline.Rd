@@ -4,7 +4,7 @@
 \alias{log_derivative_spline}
 \title{log_derivative_spline}
 \usage{
-log_derivative_spline(t, s, n = 20)
+log_derivative_spline(t, s, n = 20, return.pos = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
@@ -12,6 +12,8 @@ log_derivative_spline(t, s, n = 20)
 \item{s}{Numeric vector with the drawdown}
 
 \item{n}{Number of points where the derivative is calculated}
+
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
 }
 \value{
 A list with

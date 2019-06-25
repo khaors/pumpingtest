@@ -37,6 +37,7 @@ logseq <- function( from = 1, to = 1, n) {
 #' linear regression approach.
 #' @param method Method to calculate the derivative (central, horner, bourdet and
 #' spline)
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' This function returns a list with components named as x and y that contains the
 #' log_derivative y evaluated at specific points x.
@@ -57,15 +58,15 @@ logseq <- function( from = 1, to = 1, n) {
 #' plot(logd.central$x, logd.central$y, type = "p")
 #' points(logd.horner$x, logd.horner$y, col = "red")
 #' points(logd.bourdet$x, logd.bourdet$y, col = "blue")
-log_derivative <- function(t, s, d = 2, method = 'central'){
+log_derivative <- function(t, s, d = 2, method = 'central', return.pos = T){
   if(method == 'central'){
-    log_d <- log_derivative_central(t, s)
+    log_d <- log_derivative_central(t, s, return.pos)
   }
   else if(method == 'horner'){
-    log_d <- log_derivative_horner(t, s)
+    log_d <- log_derivative_horner(t, s, return.pos)
   }
   else if(method == 'bourdet'){
-    log_d <- log_derivative_bourdet(t, s, d)
+    log_d <- log_derivative_bourdet(t, s, d, return.pos)
   }
   else if(method =='spline'){
     log_d <- log_derivative_spline(t, s, n = d)
@@ -104,6 +105,7 @@ log_derivative <- function(t, s, d = 2, method = 'central'){
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
 #' @param d Numeric value
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -126,7 +128,7 @@ log_derivative <- function(t, s, d = 2, method = 'central'){
 #' dptest.bd <- log_derivative_bourdet(ptest$t, ptest$s, d = 10)
 #' plot(t, s, type= "p", log = "xy", ylim = c(1e-3,2))
 #' points(dptest.bd$x, dptest.bd$y, col = "red")
-log_derivative_bourdet <- function(t, s, d = 2){
+log_derivative_bourdet <- function(t, s, d = 2, return.pos = T){
   t1 <- log(t)
   dx <- t1[2:length(t)]-t1[1:(length(t)-1)]
   dy <- s[2:length(t)]-s[1:(length(t)-1)]
@@ -136,9 +138,11 @@ log_derivative_bourdet <- function(t, s, d = 2){
   dy2 <- dy[(2*d):length(s)]
   xd <- t[d:(length(t)-d)]
   yd<-(((dx2*dy1)/dx1)+((dx1*dy2)/dx2))/(dx1+dx2)
-  pos_valid <- !is.na(yd) & yd > 1.0e-10
-  xd <- xd[pos_valid]
-  yd <- yd[pos_valid]
+  if(return.pos){
+    pos_valid <- !is.na(yd) & yd > 1.0e-10
+    xd <- xd[pos_valid]
+    yd <- yd[pos_valid]
+  }
   results <- list(x = xd, y = yd)
   return(results)
 }
@@ -149,6 +153,7 @@ log_derivative_bourdet <- function(t, s, d = 2){
 #' of log time using the approach proposed by Horner
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -171,7 +176,7 @@ log_derivative_bourdet <- function(t, s, d = 2){
 #' dptest.hn <- log_derivative_horner(ptest$t, ptest$s)
 #' plot(t, s, type= "p", log = "xy", ylim = c(1e-3,2))
 #' points(dptest.hn$x, dptest.hn$y, col = "red")
-log_derivative_horner <- function(t, s){
+log_derivative_horner <- function(t, s, return.pos = T){
   end <- length(t)
   t1 <- t[1:(end-2)]
   t2 <- t[2:(end-1)]
@@ -184,9 +189,11 @@ log_derivative_horner <- function(t, s){
   d3 <- (log(t3/t2)*s1)/(log(t2/t1)*log(t3/t1));
   yd <- d1+d2-d3;
   xd <- t2;
-  pos_valid <- !is.na(yd) & yd > 1.0e-10
-  xd <- xd[pos_valid]
-  yd <- yd[pos_valid]
+  if(return.pos){
+    pos_valid <- !is.na(yd) & yd > 1.0e-10
+    xd <- xd[pos_valid]
+    yd <- yd[pos_valid]
+  }
   results <- list(x = xd, y = yd)
   return(results)
 }
@@ -197,6 +204,7 @@ log_derivative_horner <- function(t, s){
 #' of log time using the central finite differences
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -216,7 +224,7 @@ log_derivative_horner <- function(t, s){
 #' dptest.cn <- log_derivative_central(ptest$t, ptest$s)
 #' plot(t, s, type = "p", log = "xy", ylim = c(1e-3,2))
 #' points(dptest.cn$x, dptest.cn$y, col = "red")
-log_derivative_central <- function(t, s){
+log_derivative_central <- function(t, s, return.pos = T){
   pos <- t > 0.0
   t <- t[pos]
   s <- s[pos]
@@ -224,10 +232,12 @@ log_derivative_central <- function(t, s){
   dy <- s[2:length(t)]-s[1:length(t)-1]
   xd <- sqrt(t[1:(length(t)-1)]*t[2:length(t)])
   yd <- xd*dy/dx
-  pos_valid <- !is.na(yd) & yd > 1e-10
-  xd <- xd[pos_valid]
-  yd <- yd[pos_valid]
-  results <- list(x = xd, y = yd)
+  if(return.pos){
+    pos_valid <- !is.na(yd) & yd > 1e-10
+    xd <- xd[pos_valid]
+    yd <- yd[pos_valid]
+    results <- list(x = xd, y = yd)
+  }
   return(results)
 }
 #' @title
@@ -238,6 +248,7 @@ log_derivative_central <- function(t, s){
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
 #' @param n Number of points where the derivative is calculated
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -261,7 +272,7 @@ log_derivative_central <- function(t, s){
 #' dptest.sp <- log_derivative_spline(ptest$t, ptest$s, n = 30)
 #' plot(t, s, type="p", log="xy", ylim = c(1e-3,2))
 #' points(dptest.sp$x, dptest.sp$y, col = "red")
-log_derivative_spline <- function(t, s, n = 20){
+log_derivative_spline <- function(t, s, n = 20, return.pos = T){
   #print(n)
   pos_valid <- t  > 0
   t <- t[pos_valid]
@@ -273,9 +284,11 @@ log_derivative_spline <- function(t, s, n = 20){
   end_p <- length(s1$x)
   x <- s1$x[2:(end_p-1)];
   y <- x*(s1$y[3:end_p]-s1$y[1:(end_p-2)])/(s1$x[3:end_p]-s1$x[1:(end_p-2)])
-  pos_valid <- !is.na(y) & y > 1.0e-10
-  x <- x[pos_valid]
-  y <- y[pos_valid]
+  if(return.pos){
+    pos_valid <- !is.na(y) & y > 1.0e-10
+    x <- x[pos_valid]
+    y <- y[pos_valid]
+  }
   res <- list(x = x, y =y)
   return(res)
 }
@@ -287,6 +300,7 @@ log_derivative_spline <- function(t, s, n = 20){
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
 #' @param n Number of points where the derivative is calculated
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -309,7 +323,7 @@ log_derivative_spline <- function(t, s, n = 20){
 #' dptest.sp <- log_derivative_spane(ptest$t, ptest$s, n = 6)
 #' plot(t, s, type = "p", log = "xy", ylim = c(1e-3, 2))
 #' points(dptest.sp$x, dptest.sp$y, col="red")
-log_derivative_spane <- function(t, s, n = 2){
+log_derivative_spane <- function(t, s, n = 2, return.pos = T){
   pos <- t > 0.0
   t <- t[pos]
   s <- s[pos]
@@ -337,9 +351,11 @@ log_derivative_spane <- function(t, s, n = 2){
     yd[pos] <-  (m1*dx2+m2*dx1)/(2*(dx1+dx2))
     pos <- pos + 1
   }
-  pos_valid <- !is.na(yd) & yd > 1e-10
-  xd <- xd[pos_valid]
-  yd <- yd[pos_valid]
+  if(return.pos){
+    pos_valid <- !is.na(yd) & yd > 1e-10
+    xd <- xd[pos_valid]
+    yd <- yd[pos_valid]
+  }
   results <- list(x = xd, y = yd)
   return(results)
 }
@@ -351,6 +367,7 @@ log_derivative_spane <- function(t, s, n = 2){
 #' Validation),
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -372,7 +389,7 @@ log_derivative_spane <- function(t, s, n = 2){
 #' dptest.sm <- log_derivative_smoothspline(ptest$t, ptest$s)
 #' plot(t,s,type="p",log="xy",ylim=c(1e-3,2))
 #' lines(dptest.sm$x,dptest.sm$y,col="red")
-log_derivative_smoothspline <- function(t, s){
+log_derivative_smoothspline <- function(t, s, return.pos = T){
   pos <- t > 0.0
   t <- t[pos]
   s <- s[pos]
@@ -382,7 +399,11 @@ log_derivative_smoothspline <- function(t, s){
   t1 <- log10(t)
   t1a <- logseq(from = 1.01*min(t1), to = 0.99*max(t1), n = length(t1))
   res1 <- predict(res, log10(t1a), deriv = 1)
-  results <- list(x = 10^(res1$x), y = abs(res1$y)/log(10), res = res)
+  y <- res1$y
+  if(return.pos){
+    y <- abs(res1$y)/log(10)
+  }
+  results <- list(x = 10^(res1$x), y = y, res = res)
   return(results)
 }
 #' @title
@@ -393,11 +414,13 @@ log_derivative_smoothspline <- function(t, s){
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
 #' @param bw bandwidth
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
 #'   \item x: Numeric vector with the x coordinates where the log-derivative is evaluated
 #'   \item y: Numeric vector with the value of the log-derivative
+#'   \item res: Kernel regression object
 #' }
 #' @family log_derivative functions
 #' @author
@@ -414,7 +437,7 @@ log_derivative_smoothspline <- function(t, s){
 #' dptest.ks <- log_derivative_kernelreg(ptest$t, ptest$s)
 #' plot(t,s,type="p",log="xy",ylim=c(1e-3,2))
 #' lines(dptest.ks$x,dptest.ks$y,col="red")
-log_derivative_kernelreg <- function(t, s, bw = NULL){
+log_derivative_kernelreg <- function(t, s, bw = NULL, return.pos = T){
   pos <- t > 0.0
   t <- t[pos]
   s <- s[pos]
@@ -434,8 +457,11 @@ log_derivative_kernelreg <- function(t, s, bw = NULL){
   res <- locpoly(x = log10(t), y = s, drv = 1L, degree = 2, kernel = "normal",
                  bandwidth = bw,
                  gridsize = ntvalues)
-  pos.valid <- res$y > 0 & !is.na(res$y)
-  result <- list(x = 10^(res$x[pos.valid]), y = res$y[pos.valid])
+  pos.valid <- seq(1, ntvalues, by = 1)
+  if(return.pos){
+    pos.valid <- res$y > 0 & !is.na(res$y)
+  }
+  result <- list(x = 10^(res$x[pos.valid]), y = res$y[pos.valid], res = res)
   return(result)
 }
 #' @title
@@ -445,6 +471,7 @@ log_derivative_kernelreg <- function(t, s, bw = NULL){
 #' of log time using local kernel regression of the measured data.
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -465,12 +492,16 @@ log_derivative_kernelreg <- function(t, s, bw = NULL){
 #' dptest.lp <- log_derivative_lokern(ptest$t, ptest$s)
 #' plot(t, s, type = "p", log = "xy", ylim = c(1e-3,2))
 #' points(dptest.lp$x, dptest.lp$y, col = "red")
-log_derivative_lokern <- function(t, s){
+log_derivative_lokern <- function(t, s, return.pos = T){
   pos <- t > 0.0
   t <- t[pos]
   s <- s[pos]
+  ntdat <- length(t)
   res <- lokerns(log(t), s, deriv = 1, n.out = length(t), x.out = log(t))
-  pos <- res$est > 1.0e-5
+  pos <- rep(T, ntdat)
+  if(return.pos){
+    pos <- res$est > 1.0e-5
+  }
   results <- list(x = exp(res$x.out[pos]), y = res$est[pos])
   return(results)
 }
@@ -481,6 +512,7 @@ log_derivative_lokern <- function(t, s){
 #' of log time using local polynomial regression of the measured data.
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -503,7 +535,7 @@ log_derivative_lokern <- function(t, s){
 #' dptest.lp <- log_derivative_locpol(ptest$t, ptest$s)
 #' plot(t, s, type = "p", log = "xy", ylim = c(1e-3,2))
 #' points(dptest.lp$x, dptest.lp$y, col = "red")
-log_derivative_locpol <- function(t, s){
+log_derivative_locpol <- function(t, s, return.pos = T){
   pos <- t > 0.0
   t <- t[pos]
   s <- s[pos]
@@ -522,6 +554,7 @@ log_derivative_locpol <- function(t, s){
 #' of log time using local ridge regression of the measured data.
 #' @param t Numeric vector with the time
 #' @param s Numeric vector with the drawdown
+#' @param return.pos Logical flag to return only the positive values of the log-derivative
 #' @return
 #' A list with
 #' \itemize{
@@ -542,7 +575,7 @@ log_derivative_locpol <- function(t, s){
 #' dptest.lp <- log_derivative_lpridge(ptest$t, ptest$s)
 #' plot(t, s, type = "p", log = "xy", ylim = c(1e-3,2))
 #' points(dptest.lp$x, dptest.lp$y, col = "red")
-log_derivative_lpridge <- function(t, s){
+log_derivative_lpridge <- function(t, s, return.pos = T){
   pos <- t > 0.0
   t <- t[pos]
   s <- s[pos]

@@ -4,7 +4,7 @@
 \alias{log_derivative}
 \title{log_derivative}
 \usage{
-log_derivative(t, s, d = 2, method = "central")
+log_derivative(t, s, d = 2, method = "central", return.pos = T)
 }
 \arguments{
 \item{t}{vector with time values}
@@ -19,6 +19,8 @@ linear regression approach.}
 
 \item{method}{Method to calculate the derivative (central, horner, bourdet and
 spline)}
+
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
 }
 \value{
 This function returns a list with components named as x and y that contains the

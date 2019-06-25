@@ -4,7 +4,7 @@
 \alias{log_derivative_spane}
 \title{log_derivative_spane}
 \usage{
-log_derivative_spane(t, s, n = 2)
+log_derivative_spane(t, s, n = 2, return.pos = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
@@ -12,6 +12,8 @@ log_derivative_spane(t, s, n = 2)
 \item{s}{Numeric vector with the drawdown}
 
 \item{n}{Number of points where the derivative is calculated}
+
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
 }
 \value{
 A list with

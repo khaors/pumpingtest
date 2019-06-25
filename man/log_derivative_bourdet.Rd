@@ -4,7 +4,7 @@
 \alias{log_derivative_bourdet}
 \title{log_derivative_bourdet}
 \usage{
-log_derivative_bourdet(t, s, d = 2)
+log_derivative_bourdet(t, s, d = 2, return.pos = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
@@ -12,6 +12,8 @@ log_derivative_bourdet(t, s, d = 2)
 \item{s}{Numeric vector with the drawdown}
 
 \item{d}{Numeric value}
+
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
 }
 \value{
 A list with

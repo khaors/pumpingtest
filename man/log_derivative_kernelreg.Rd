@@ -4,7 +4,7 @@
 \alias{log_derivative_kernelreg}
 \title{log_derivative_kernelreg}
 \usage{
-log_derivative_kernelreg(t, s, bw = NULL)
+log_derivative_kernelreg(t, s, bw = NULL, return.pos = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
@@ -12,12 +12,15 @@ log_derivative_kernelreg(t, s, bw = NULL)
 \item{s}{Numeric vector with the drawdown}
 
 \item{bw}{bandwidth}
+
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
 }
 \value{
 A list with
 \itemize{
   \item x: Numeric vector with the x coordinates where the log-derivative is evaluated
   \item y: Numeric vector with the value of the log-derivative
+  \item res: Kernel regression object
 }
 }
 \description{

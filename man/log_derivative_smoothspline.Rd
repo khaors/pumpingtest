@@ -4,12 +4,14 @@
 \alias{log_derivative_smoothspline}
 \title{log_derivative_smoothspline}
 \usage{
-log_derivative_smoothspline(t, s)
+log_derivative_smoothspline(t, s, return.pos = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
 
 \item{s}{Numeric vector with the drawdown}
+
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
 }
 \value{
 A list with
