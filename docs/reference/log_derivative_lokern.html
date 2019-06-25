@@ -124,7 +124,7 @@ of log time using local kernel regression of the measured data.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>log_derivative_lokern</span>(<span class='no'>t</span>, <span class='no'>s</span>)</pre>
+    <pre class="usage"><span class='fu'>log_derivative_lokern</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>return.pos</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,6 +136,10 @@ of log time using local kernel regression of the measured data.</p>
     <tr>
       <th>s</th>
       <td><p>Numeric vector with the drawdown</p></td>
+    </tr>
+    <tr>
+      <th>return.pos</th>
+      <td><p>Logical flag to return only the positive values of the log-derivative</p></td>
     </tr>
     </table>
     

@@ -122,7 +122,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>log_derivative</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"central"</span>)</pre>
+    <pre class="usage"><span class='fu'>log_derivative</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"central"</span>, <span class='kw'>return.pos</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,6 +147,10 @@ linear regression approach.</p></td>
       <th>method</th>
       <td><p>Method to calculate the derivative (central, horner, bourdet and
 spline)</p></td>
+    </tr>
+    <tr>
+      <th>return.pos</th>
+      <td><p>Logical flag to return only the positive values of the log-derivative</p></td>
     </tr>
     </table>
     

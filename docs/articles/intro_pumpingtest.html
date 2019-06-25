@@ -80,7 +80,7 @@
       <h1>pumpingtest: Analysis and Evaluation of Pumping Test Data in R</h1>
                         <h4 class="author">Oscar Garcia-Cabrejo</h4>
             
-            <h4 class="date">2019-04-28</h4>
+            <h4 class="date">2019-06-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khaors/pumpingtest/blob/master/vignettes/intro_pumpingtest.Rmd"><code>vignettes/intro_pumpingtest.Rmd</code></a></small>
       <div class="hidden name"><code>intro_pumpingtest.Rmd</code></div>
@@ -259,40 +259,40 @@ s(r,t) = \frac{Q}{4 \pi T} W(\boldsymbol{\theta})
 <h3 class="hasAnchor">
 <a href="#pumping-test-in-a-confined-aquifer" class="anchor"></a>Pumping Test in a Confined Aquifer</h3>
 <p>The drawdown data from the pumping test in a confined aquifer is save in the data.frame <em>theis</em> included in the package. This data.frame is loaded using:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(theis)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(theis)</a></code></pre></div>
 <p>This data.frame is composed of two variables:</p>
 <ul>
 <li>t: Vector with the values of time when measurements were recorded</li>
 <li>s: Vector with the values of drawdown</li>
 </ul>
 <p>This drawdown was caused by a well withdrawing water at a pumping rate of<br><span class="math inline">\(Q=1.2\;\; l/s\)</span> which is equivalent to <span class="math inline">\(Q=1.388 \times 10^{-2}\;\;m^{3}/s\)</span>, and located at <span class="math inline">\(r=250\;\;m\)</span> from the observation well. The pumping_test object is defined using:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.theis &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pumping_test.html">pumping_test</a></span>(<span class="st">"Well 1"</span>, <span class="dt">Q =</span> <span class="fl">1.3888e-2</span>, <span class="dt">r =</span> <span class="dv">250</span>, <span class="dt">t =</span> theis<span class="op">$</span>t, <span class="dt">s =</span> theis<span class="op">$</span>s)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">ptest.theis &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pumping_test.html">pumping_test</a></span>(<span class="st">"Well 1"</span>, <span class="dt">Q =</span> <span class="fl">1.3888e-2</span>, <span class="dt">r =</span> <span class="dv">250</span>, <span class="dt">t =</span> theis<span class="op">$</span>t, <span class="dt">s =</span> theis<span class="op">$</span>s)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">p1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis)</a></code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p1)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p1)</a></code></pre></div>
 <p><img src="intro_pumpingtest_files/figure-html/plot_theis-1.png" width="576" style="display: block; margin: auto;"></p>
 <div id="diagnostic-plots" class="section level4">
 <h4 class="hasAnchor">
 <a href="#diagnostic-plots" class="anchor"></a>Diagnostic Plots</h4>
 <p>The diagnostic plot is the default option in the <em>plot</em> function, in which the derivative of the drawdown with respect to the logarithm of time is calculated via central differences. The drawdown derivative is very sensitive to the noise present in the drawdown measurements and therefore it is advisable to create the diagnostic plot using different derivative types. In this case, four types of derivatives are used in the diagnostic plots:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(gridExtra)
-p.central &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"central"</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(gridExtra)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">p.central &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"central"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</a></code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.horner &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"horner"</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">p.horner &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"horner"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</a></code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.bourdet &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"bourdet"</span>, <span class="dt">d =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">p.bourdet &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"bourdet"</span>, <span class="dt">d =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</a></code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.spline &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"spline"</span>, <span class="dt">d =</span> <span class="dv">20</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">p.spline &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">dmethod =</span> <span class="st">"spline"</span>, <span class="dt">d =</span> <span class="dv">20</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"bottom"</span>)</a></code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.diagnostic &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(p.central, p.horner, p.bourdet, p.spline, 
-                             <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">p.diagnostic &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(p.central, p.horner, p.bourdet, p.spline, </a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">                             <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="intro_pumpingtest_files/figure-html/theis_diagnostic_plot1-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.diagnostic)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.diagnostic)</a></code></pre></div>
 <pre><code>## TableGrob (2 x 2) "arrange": 4 grobs
 ##   z     cells    name           grob
 ## 1 1 (1-1,1-1) arrange gtable[layout]
@@ -306,7 +306,7 @@ p.central &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 <h4 class="hasAnchor">
 <a href="#parameter-estimation" class="anchor"></a>Parameter Estimation</h4>
 <p>The function <em>fit</em> is used to estimate the parameters of the model. In the <em>PumpingTest</em> package, most of the models included are parametrized in terms of nuance parameters instead of the hydraulic properties of the aquifer. For the Theis model, the parameters are the slope <span class="math inline">\(a\)</span> and the intercept <span class="math inline">\(t_{0}\)</span> of the straight line fitted for the late measurements of drawdown where the logarithm of time is taken as the independent variable. The estimation of these parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(t_{0}\)</span> is obtained via nonlinear regression using the <em>fit</em> command:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.fit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fit.html">fit</a></span>(ptest.theis, <span class="st">"theis"</span>)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">ptest.fit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fit.html">fit</a></span>(ptest.theis, <span class="st">"theis"</span>)</a></code></pre></div>
 <p>The output of this command is a list that contains three variables:</p>
 <ul>
 <li>
@@ -318,14 +318,14 @@ p.central &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 <strong>nlsfit</strong>: an object of the class <em>nls</em> that contains all the information related to the nonlinear regression procedure used in the estimation of the nuance parameters.</li>
 </ul>
 <p>Let’s take a look at the values of the nuance parameters accessing the parameters variable:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.fit<span class="op">$</span>parameters</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">ptest.fit<span class="op">$</span>parameters</a></code></pre></div>
 <pre><code>## $a
 ## [1] 1.78566
 ## 
 ## $t0
 ## [1] 413.0369</code></pre>
 <p>This shows that the value of <span class="math inline">\(a=\)</span> 1.7856604 and <span class="math inline">\(t_{0}=\)</span> 413.0369046. From these values the hydraulic parameters specific for this model are internally calculated by the <em>fit</em> function using the <em>theis_calculate_parameters</em> function and the results are:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.fit<span class="op">$</span>hydraulic_parameters</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">ptest.fit<span class="op">$</span>hydraulic_parameters</a></code></pre></div>
 <pre><code>## $Tr
 ## [1] 0.001425104
 ## 
@@ -334,35 +334,35 @@ p.central &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 ## 
 ## $radius_influence
 ## [1] 2843.458</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Tr &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>Tr
-Ss &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>Ss
-Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>radius_influence</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">Tr &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>Tr</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">Ss &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>Ss</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters<span class="op">$</span>radius_influence</a></code></pre></div>
 <p>which means that the transmissivity is equal to 1.43e-03 m2/s, the storage coefficient is 2.12e-05, and the radius of influence is equal to 2.84e+03 m or 2.84e+00 km.</p>
 <p>Using the values of the hydraulic parameters, now it is possible to create the estimation plot. This requires the assignment of the results of the fitting procedure to the <em>pumping_test</em> object which is done using the following auxiliary functions:</p>
 <ul>
 <li>
 <em>hydraulic.parameters</em>: assigns the hydraulic_parameters variable to the <em>pumping_test</em> object</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hydraulic.parameters</span>(ptest.theis) &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">hydraulic.parameters</span>(ptest.theis) &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_parameters</a></code></pre></div>
 <ul>
 <li>
 <em>fit.parameters</em>: assigns the nuance parameters to the <em>pumping_test</em> object</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fit.parameters</span>(ptest.theis) &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>parameters</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">fit.parameters</span>(ptest.theis) &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>parameters</a></code></pre></div>
 <ul>
 <li>
 <em>model</em>: assigns the model to the <em>pumping_test</em> object</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">model</span>(ptest.theis) &lt;-<span class="st"> "theis"</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">model</span>(ptest.theis) &lt;-<span class="st"> "theis"</span></a></code></pre></div>
 <ul>
 <li>
 <em>estimated</em>: specifies that the <em>pumping_test</em> object has the estimation information</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">estimated</span>(ptest.theis) &lt;-<span class="st"> </span><span class="ot">TRUE</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.estimation &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">type =</span> <span class="st">"estimation"</span>, <span class="dt">dmethod =</span> <span class="st">"spline"</span>, 
-                     <span class="dt">d =</span> <span class="dv">30</span>) </code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">estimated</span>(ptest.theis) &lt;-<span class="st"> </span><span class="ot">TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">p.estimation &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">type =</span> <span class="st">"estimation"</span>, <span class="dt">dmethod =</span> <span class="st">"spline"</span>, </a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">                     <span class="dt">d =</span> <span class="dv">30</span>) </a></code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.estimation)</code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.estimation)</a></code></pre></div>
 <p><img src="intro_pumpingtest_files/figure-html/theis_estimation-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The visual inspection of the previous figure shows that there is a good fit between the model and the drawdown measurements and even the derivative. These are good news but it is critical to be sure that the fitted model satisfy the assumptions behind a nonlinear regression model. If these conditions are not checked then it is not possible to be sure that the model is appropiate and therefore the predictions based upon these hydraulic parameters are correct. The tools to check the fitted model are presented in the next section.</p>
 </div>
@@ -378,12 +378,12 @@ Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_par
 <li>normally distributed residuals</li>
 </ul>
 <p>These assumptions can be checked informally using specialized plots which can be created using the plot function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.mod.diag &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">type =</span> <span class="st">'model.diagnostic'</span>)</code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">p.mod.diag &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">type =</span> <span class="st">'model.diagnostic'</span>)</a></code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
 <pre><code>## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'</code></pre>
 <p><img src="intro_pumpingtest_files/figure-html/theis_residuals-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.mod.diag)</code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.mod.diag)</a></code></pre></div>
 <pre><code>## TableGrob (2 x 2) "arrange": 4 grobs
 ##   z     cells    name           grob
 ## 1 1 (1-1,1-1) arrange gtable[layout]
@@ -397,13 +397,13 @@ Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_par
 <a href="#uncertainty-quantification" class="anchor"></a>Uncertainty Quantification</h3>
 <p>In this last step, the uncertainty in the estimates of the hydraulic parameters is quantified using a simple bootstrapp approach. This method is based on the defining a new drawdown curve using a new set of residuals obtained form the resampling with replacement of the original residuals. Then the hydraulic parameters are estimated for all the generated curves and with the results a probability density function for each parameter can be defined. Estimates of confidence intervals can be derived <em>nonparametrically</em> from these probability density functions.</p>
 <p>The confidence intervals of the hydraulic parameters can be estimated using the <strong>confint</strong> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptest.theis.ci &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/confint">confint</a></span>(ptest.theis, <span class="dt">level =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), 
-                          <span class="dt">method =</span> <span class="st">"bootstrap"</span>, <span class="dt">d =</span> <span class="dv">20</span>, 
-                          <span class="dt">neval =</span> <span class="dv">100</span>, <span class="dt">seed =</span> <span class="dv">12346</span>)</code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">ptest.theis.ci &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/confint">confint</a></span>(ptest.theis, <span class="dt">level =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), </a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">                          <span class="dt">method =</span> <span class="st">"bootstrap"</span>, <span class="dt">d =</span> <span class="dv">20</span>, </a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">                          <span class="dt">neval =</span> <span class="dv">100</span>, <span class="dt">seed =</span> <span class="dv">12346</span>)</a></code></pre></div>
 <p>The results of the estimation are stored in the variable ptest.test.ci, and these results must be assigned to the ptest.theis object:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hydraulic.parameters</span>(ptest.theis) &lt;-<span class="st"> </span>ptest.theis.ci<span class="op">$</span>hydraulic.parameters
-<span class="kw">hydraulic.parameter.names</span>(ptest.theis) &lt;-<span class="st"> </span>ptest.theis.ci<span class="op">$</span>hydraulic.parameters.names
-<span class="kw">estimated</span>(ptest.theis) &lt;-<span class="st"> </span><span class="ot">TRUE</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">hydraulic.parameters</span>(ptest.theis) &lt;-<span class="st"> </span>ptest.theis.ci<span class="op">$</span>hydraulic.parameters</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="kw">hydraulic.parameter.names</span>(ptest.theis) &lt;-<span class="st"> </span>ptest.theis.ci<span class="op">$</span>hydraulic.parameters.names</a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="kw">estimated</span>(ptest.theis) &lt;-<span class="st"> </span><span class="ot">TRUE</span></a></code></pre></div>
 <p>The confidence intervals of the hydraulic parameters for the pumping test applied in a confined aquifer are shown in the following table.</p>
 <table class="table">
 <caption>Theis solution. Confindence intervals of the Hydraulic Parameters</caption>
@@ -431,9 +431,9 @@ Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_par
 </tbody>
 </table>
 <p>The uncertainty plot can be created using the <strong>plot</strong> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.uncert &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">type =</span> <span class="st">"uncertainty"</span>)</code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">p.uncert &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ptest.theis, <span class="dt">type =</span> <span class="st">"uncertainty"</span>)</a></code></pre></div>
 <pre><code>## Joining, by = c("t", "s", "variable")</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.uncert)</code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p.uncert)</a></code></pre></div>
 <p><img src="intro_pumpingtest_files/figure-html/theis_boot4-1.png" width="768" style="display: block; margin: auto;"></p>
 <p>The previous figure shows along the diagonals the probability density function of the hydraulic parameters estimated using 100 boostrap realizations. The probability distributions of these parameters are unimodal and nearly symmetric in all cases. On the off-diagonals, the scatterplots of the hydraulic parameters are shown where it is clear that the transmissivity and storage coefficient are not independent of each other, and this implies that in reality there is one single parameter defining the model. This parameter is called hydraulic diffusivity which is defined as the ratio of the transmissivity to the storage coefficient.</p>
 </div>
@@ -443,19 +443,19 @@ Ri &lt;-<span class="st"> </span>ptest.fit<span class="op">$</span>hydraulic_par
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
 <div id="ref-Christen_2010">
-<p>Christen, J. Andr’es, and Colin Fox. 2010. “A General Purpose Sampling Algorithm for Continuous Distributions (the T-Walk).” <em>Bayesian Analysis</em> 5 (2). Institute of Mathematical Statistics: 263–81. doi:<a href="https://doi.org/10.1214/10-ba603">10.1214/10-ba603</a>.</p>
+<p>Christen, J. Andr’es, and Colin Fox. 2010. “A General Purpose Sampling Algorithm for Continuous Distributions (the T-Walk).” <em>Bayesian Analysis</em> 5 (2). Institute of Mathematical Statistics: 263–81. <a href="https://doi.org/10.1214/10-ba603">https://doi.org/10.1214/10-ba603</a>.</p>
 </div>
 <div id="ref-doetsch1974">
-<p>Doetsch, G. 1974. <em>Introduction to the Theory and Application of the Laplace Transformation</em>. Springer-Verlag. <a href="https://books.google.com.co/books?id=AreGQgAACAAJ" class="uri">https://books.google.com.co/books?id=AreGQgAACAAJ</a>.</p>
+<p>Doetsch, G. 1974. <em>Introduction to the Theory and Application of the Laplace Transformation</em>. Springer-Verlag. <a href="https://books.google.com.co/books?id=AreGQgAACAAJ">https://books.google.com.co/books?id=AreGQgAACAAJ</a>.</p>
 </div>
 <div id="ref-Duong_1989">
-<p>Duong, Anh N. 1989. “A New Set of Type Curves for Well-Test Interpretation with the Pressure/Pressure-Derivative Ratio.” <em>SPE Formation Evaluation</em> 4 (02). Society of Petroleum Engineers (SPE): 264–72. doi:<a href="https://doi.org/10.2118/16812-pa">10.2118/16812-pa</a>.</p>
+<p>Duong, Anh N. 1989. “A New Set of Type Curves for Well-Test Interpretation with the Pressure/Pressure-Derivative Ratio.” <em>SPE Formation Evaluation</em> 4 (02). Society of Petroleum Engineers (SPE): 264–72. <a href="https://doi.org/10.2118/16812-pa">https://doi.org/10.2118/16812-pa</a>.</p>
 </div>
 <div id="ref-Renard_2008">
-<p>Renard, Philippe, Damian Glenz, and Miguel Mejias. 2008. “Understanding Diagnostic Plots for Well-Test Interpretation.” <em>Hydrogeology Journal</em> 17 (3). Springer Nature: 589–600. doi:<a href="https://doi.org/10.1007/s10040-008-0392-0">10.1007/s10040-008-0392-0</a>.</p>
+<p>Renard, Philippe, Damian Glenz, and Miguel Mejias. 2008. “Understanding Diagnostic Plots for Well-Test Interpretation.” <em>Hydrogeology Journal</em> 17 (3). Springer Nature: 589–600. <a href="https://doi.org/10.1007/s10040-008-0392-0">https://doi.org/10.1007/s10040-008-0392-0</a>.</p>
 </div>
 <div id="ref-Stehfest_1970">
-<p>Stehfest, Harald. 1970. “Algorithm 368: Numerical Inversion of Laplace Transforms [D5].” <em>Communications of the ACM</em> 13 (1). Association for Computing Machinery (ACM): 47–49. doi:<a href="https://doi.org/10.1145/361953.361969">10.1145/361953.361969</a>.</p>
+<p>Stehfest, Harald. 1970. “Algorithm 368: Numerical Inversion of Laplace Transforms [D5].” <em>Communications of the ACM</em> 13 (1). Association for Computing Machinery (ACM): 47–49. <a href="https://doi.org/10.1145/361953.361969">https://doi.org/10.1145/361953.361969</a>.</p>
 </div>
 </div>
 </div>

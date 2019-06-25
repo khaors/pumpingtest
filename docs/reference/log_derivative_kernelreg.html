@@ -124,7 +124,7 @@ of log time using kernel regression of the measured data.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>log_derivative_kernelreg</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>bw</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>log_derivative_kernelreg</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>bw</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return.pos</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,6 +141,10 @@ of log time using kernel regression of the measured data.</p>
       <th>bw</th>
       <td><p>bandwidth</p></td>
     </tr>
+    <tr>
+      <th>return.pos</th>
+      <td><p>Logical flag to return only the positive values of the log-derivative</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -148,6 +152,7 @@ of log time using kernel regression of the measured data.</p>
     <p>A list with</p><ul>
 <li><p>x: Numeric vector with the x coordinates where the log-derivative is evaluated</p></li>
 <li><p>y: Numeric vector with the value of the log-derivative</p></li>
+<li><p>res: Kernel regression object</p></li>
 </ul>
 
     
