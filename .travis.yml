@@ -14,6 +14,12 @@ repos:
   CRAN: https://cloud.r-project.org
   ropensci: http://packages.ropensci.org  
 
+env:
+  global:
+    - R_MAX_NUM_DLLS=999
+    - _R_CHECK_FORCE_SUGGESTS_=true
+    - _R_CHECK_CRAN_INCOMING_=true
+
 r_binary_packages:
   - Rcpp 
   - dplyr 
@@ -48,8 +54,8 @@ r_binary_packages:
   - knitcitations
   - knitr
 
-r_build_args: "--no-manual --no-resave-data"        
-r_check_args: "--no-build-vignettes --no-manual --timings"
+#r_build_args: "--no-manual --no-resave-data"        
+#r_check_args: "--no-build-vignettes --no-manual --timings"
 
 before_install:
   - sudo apt-get install libgsl0ldbl 
