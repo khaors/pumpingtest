@@ -21,11 +21,12 @@ env:
     - _R_CHECK_CRAN_INCOMING_=true
 
 r_binary_packages:
+  - stringi 
+  - stringr 
+  - curl
   - Rcpp 
   - dplyr 
   - ggplot2 
-  - stringi 
-  - stringr 
   - KernSmooth    
   - locpol
   - lokern       
