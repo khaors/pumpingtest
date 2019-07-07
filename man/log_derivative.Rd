@@ -4,7 +4,8 @@
 \alias{log_derivative}
 \title{log_derivative}
 \usage{
-log_derivative(t, s, d = 2, method = "central", return.pos = T)
+log_derivative(t, s, d = 2, method = "central", return.pos = T,
+  log = T)
 }
 \arguments{
 \item{t}{vector with time values}
@@ -20,7 +21,10 @@ linear regression approach.}
 \item{method}{Method to calculate the derivative (central, horner, bourdet and
 spline)}
 
-\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative (default = TRUE)}
+
+\item{log}{Logical flag to indicate that natural logarithm (a log to the base e) is used in the derivative 
+calculation (default = TRUE). Logarithm to the base 10 is used if FALSE.}
 }
 \value{
 This function returns a list with components named as x and y that contains the

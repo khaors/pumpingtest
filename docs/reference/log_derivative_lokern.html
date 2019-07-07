@@ -124,7 +124,7 @@ of log time using local kernel regression of the measured data.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>log_derivative_lokern</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>return.pos</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+    <pre class="usage"><span class='fu'>log_derivative_lokern</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>return.pos</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,7 +139,12 @@ of log time using local kernel regression of the measured data.</p>
     </tr>
     <tr>
       <th>return.pos</th>
-      <td><p>Logical flag to return only the positive values of the log-derivative</p></td>
+      <td><p>Logical flag to return only the positive values of the log-derivative (default = TRUE)</p></td>
+    </tr>
+    <tr>
+      <th>log</th>
+      <td><p>Logical flag to indicate that natural logarithm (a log to the base e) is used in the derivative 
+calculation (default = TRUE). Logarithm to the base 10 is used if FALSE.</p></td>
     </tr>
     </table>
     
@@ -148,6 +153,7 @@ of log time using local kernel regression of the measured data.</p>
     <p>A list with</p><ul>
 <li><p>x: Numeric vector with the x coordinates where the log-derivative is evaluated</p></li>
 <li><p>y: Numeric vector with the value of the log-derivative</p></li>
+<li><p>res: Local Kernel Regression object</p></li>
 </ul>
 
     

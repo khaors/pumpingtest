@@ -21,11 +21,23 @@ regression approach.}
 \item{method}{Method to calculate the derivative. See log_derivative}
 }
 \value{
-This function returns a list with components named as x and y that contains the
-flow dimension y evaluated at specific points x.
+This function returns a list with components:
+\itemize{
+\item x: Numeric vector with times at which the second derivative is evaluated
+\item y: Numeric vector with the values of the second derivative of drawdown
+\item n: Numeric vector with the flow dimension values evaluated at each time
+}
 }
 \description{
 Function to calculate the flow dimension using different approaches
+}
+\examples{
+data(boulton)
+t <- boulton$t
+s <- boulton$s
+boulton.fdim <- flow_dimension(t,s, method = "smoothspline")
+plot(boulton.fdim$x, boulton.fdim$n, type = "p", log = "x", 
+ylim = c(0, 10))
 }
 \author{
 Oscar Garcia-Cabrejo, \email{khaors@gmail.com}

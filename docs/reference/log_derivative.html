@@ -122,7 +122,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>log_derivative</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"central"</span>, <span class='kw'>return.pos</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+    <pre class="usage"><span class='fu'>log_derivative</span>(<span class='no'>t</span>, <span class='no'>s</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"central"</span>, <span class='kw'>return.pos</span> <span class='kw'>=</span> <span class='no'>T</span>,
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,7 +151,12 @@ spline)</p></td>
     </tr>
     <tr>
       <th>return.pos</th>
-      <td><p>Logical flag to return only the positive values of the log-derivative</p></td>
+      <td><p>Logical flag to return only the positive values of the log-derivative (default = TRUE)</p></td>
+    </tr>
+    <tr>
+      <th>log</th>
+      <td><p>Logical flag to indicate that natural logarithm (a log to the base e) is used in the derivative 
+calculation (default = TRUE). Logarithm to the base 10 is used if FALSE.</p></td>
     </tr>
     </table>
     

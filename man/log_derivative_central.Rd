@@ -4,14 +4,17 @@
 \alias{log_derivative_central}
 \title{log_derivative_central}
 \usage{
-log_derivative_central(t, s, return.pos = T)
+log_derivative_central(t, s, return.pos = T, log = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
 
 \item{s}{Numeric vector with the drawdown}
 
-\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative (default = TRUE)}
+
+\item{log}{Logical flag to indicate that natural logarithm (a log to the base e) is used in the derivative 
+calculation (default = TRUE). Logarithm to the base 10 is used if FALSE.}
 }
 \value{
 A list with

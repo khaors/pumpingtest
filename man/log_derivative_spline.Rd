@@ -4,7 +4,7 @@
 \alias{log_derivative_spline}
 \title{log_derivative_spline}
 \usage{
-log_derivative_spline(t, s, n = 20, return.pos = T)
+log_derivative_spline(t, s, n = 20, return.pos = T, log = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
@@ -13,7 +13,10 @@ log_derivative_spline(t, s, n = 20, return.pos = T)
 
 \item{n}{Number of points where the derivative is calculated}
 
-\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative (default = TRUE)}
+
+\item{log}{Logical flag to indicate that natural logarithm (a log to the base e) is used in the derivative 
+calculation (default = TRUE). Logarithm to the base 10 is used if FALSE.}
 }
 \value{
 A list with

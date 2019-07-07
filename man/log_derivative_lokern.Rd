@@ -4,20 +4,24 @@
 \alias{log_derivative_lokern}
 \title{log_derivative_lokern}
 \usage{
-log_derivative_lokern(t, s, return.pos = T)
+log_derivative_lokern(t, s, return.pos = T, log = T)
 }
 \arguments{
 \item{t}{Numeric vector with the time}
 
 \item{s}{Numeric vector with the drawdown}
 
-\item{return.pos}{Logical flag to return only the positive values of the log-derivative}
+\item{return.pos}{Logical flag to return only the positive values of the log-derivative (default = TRUE)}
+
+\item{log}{Logical flag to indicate that natural logarithm (a log to the base e) is used in the derivative 
+calculation (default = TRUE). Logarithm to the base 10 is used if FALSE.}
 }
 \value{
 A list with
 \itemize{
   \item x: Numeric vector with the x coordinates where the log-derivative is evaluated
   \item y: Numeric vector with the value of the log-derivative
+  \item res: Local Kernel Regression object
 }
 }
 \description{
