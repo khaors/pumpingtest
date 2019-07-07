@@ -4,6 +4,13 @@ language: R
 sudo: false
 cache: packages
 
+repos:
+  CRAN: https://cloud.r-project.org
+  ropensci: http://packages.ropensci.org
+  
+r_binary_packages:
+  - gsl 
+
 r_build_args: "--no-manual --no-resave-data"        
 r_check_args: "--no-build-vignettes --no-manual --timings"
 
