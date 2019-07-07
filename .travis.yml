@@ -1,23 +1,57 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-dist: trusty
+language: r
+r:
+  - release
+  - devel
 
-language: R
-sudo: false
+sudo: true
+dist: trusty
 cache: packages
+warnings_are_errors: true
 
 repos:
   CRAN: https://cloud.r-project.org
-  ropensci: http://packages.ropensci.org
-  
+  ropensci: http://packages.ropensci.org  
+
 r_binary_packages:
-  - gsl 
+  - Rcpp 
+  - dplyr 
+  - ggplot2 
+  - stringi 
+  - stringr 
+  - KernSmooth    
+  - locpol
+  - lokern       
+  - lpridge
+  - pracma
+  - Matrix
+  - matrixcalc
+  - stats
+  - mvtnorm
+  - DEoptim
+  - GA
+  - GenSA
+  - copulaedas
+  - gridExtra
+  - methods
+  - minpack.lm
+  - pso
+  - shiny
+  - gsl
+  - rhandsontable
+  - shinyalert
+  - grid
+  - GGally
+  - DT
+  - testthat
+  - knitcitations
+  - knitr
 
 r_build_args: "--no-manual --no-resave-data"        
 r_check_args: "--no-build-vignettes --no-manual --timings"
 
 before_install:
   - sudo apt-get install libgsl0ldbl 
-  - sudo apt-get install libgsl-dev
   - sudo add-apt-repository -y ppa:texlive-backports/ppa
   - Rscript -e 'update.packages(ask = FALSE)'
