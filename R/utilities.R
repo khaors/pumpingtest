@@ -75,22 +75,22 @@ log_derivative <- function(t, s, d = 2, method = 'central', return.pos = T,
     log_d <- log_derivative_spline(t, s, n = d, log)
   }
   else if(method == 'spane'){
-    log_d <- log_derivative_spane(t, s, n = d, log)
+    log_d <- log_derivative_spane(t, s, n = d, return.pos, log)
   }
   else if(method == 'smoothspline'){
-    log_d <- log_derivative_smoothspline(t, s, log)
+    log_d <- log_derivative_smoothspline(t, s, return.pos, log)
   }
   else if(method == 'kernelreg'){
-    log_d <- log_derivative_kernelreg(t, s, bw = d, log)
+    log_d <- log_derivative_kernelreg(t, s, bw = d, return.pos, log)
   }
   else if(method == 'lokern'){
-    log_d <- log_derivative_lokern(t, s, log)
+    log_d <- log_derivative_lokern(t, s, return.pos, log)
   }
   else if(method == 'locpol'){
-    log_d <- log_derivative_lokern(t, s, log)
+    log_d <- log_derivative_locpol(t, s, return.pos, log)
   }
   else if(method == "lpridge"){
-    log_d <- log_derivative_lpridge(t, s, log)
+    log_d <- log_derivative_lpridge(t, s, return.pos, log)
   }
   #  else if(method == "wavelet"){
   #    log_d <- log_derivative_wavelet(t, s)
