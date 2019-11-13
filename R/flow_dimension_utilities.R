@@ -73,12 +73,12 @@ flow_dimension <- function(t, s, d = 2, method = "central"){
   #   flow_dim <- log_derivative_spline(t, y, n = d)
   #   flow_dim$n <- 2-2*flow_dim$y
   # }
-  # else if(method == 'spane'){
-  #   log_d <- log_derivative_spane(t, s, n = d)
-  #   y <- log(log_d$y)
-  #   flow_dim <- log_derivative_spane(t, y, n = d)
-  #   flow_dim$n <- 2-2*flow_dim$y
-  # }
+  else if(method == 'spane'){
+    log_d <- log_derivative_spane(t, s, n = d, return.pos = F)
+    y <- log(log_d$y)
+    flow_dim <- log_derivative_horner(t, y, return.pos = F)
+    flow_dim$n <- 2-2*flow_dim$y
+  }
   else if(method == 'smoothspline'){
     res1a <- log_derivative_smoothspline(t, s, return.pos = F, 
                                          log = F)
